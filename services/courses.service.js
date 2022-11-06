@@ -1,20 +1,23 @@
 const courses = [{
   id: "1",
   nivel: "Básico",
-  costo: 1200
+  costo: 1200,
+  isBlock: false,
 },
 {
   id: "2",
   nivel: "Intermedio",
-  costo: 1800
+  costo: 1800,
+  isBlock: true,
 },
 {
   id: "3",
   nivel: "Avanzado",
-  costo: 2500
+  costo: 2500,
+  isBlock: true,
 }];
 
-
+const boom = require('@hapi/boom');
 // mi objeto CoursesService
 class CoursesService{
   constructor(){
@@ -34,17 +37,20 @@ class CoursesService{
   }
 
   async  findOne(id){
-    const index = this.courses.find(item => item.id === id);
-    if(index === -1){
-      throw new Error('Curso no encontrado')
+    const course = this.courses.find(item => item.id === id);
+    if(!course){
+      throw boom.notFound('Lo sentimos, curso no encontrado');
     }
-    return index;
+    if(course.isBlock){
+      throw boom.conflict('Lo sentimos, aun no estás listo para este curso')
+    }
+    return course;
   }
 
   async update(id, change){
     const index = this.courses.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error('Curso no encontrado');
+      throw boom.notFound('Lo sentimos, curso no encontrado');
     }else {
       const course = this.courses[index];
       this.courses[index] = {
@@ -58,7 +64,7 @@ class CoursesService{
   async delete(id){
     const index = this.courses.findIndex(item => item.id ===id);
     if (index === -1){
-      throw new Error('Curso no encontrado');
+      throw boom.notFound('Lo sentimos, curso no encontrado');
     }else{
       this.courses.splice(index, 1);
       return {id};

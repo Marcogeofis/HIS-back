@@ -2,39 +2,68 @@ const express = require('express');
 const router = express.Router();
 // Ya que creamos router, procdemos a crear el CRUD.
 
-
+const validatorHandler = require('../middlewares/validator.handler');
+const { createTeacherSchema, updateTeacherSchema, getTeacherSchema } = require('../schemas/teacher.schema');
 const teacherSevice = require('../services/teacher.service');
 const service = new teacherSevice();
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   const teachers = await service.find();
   res.json(teachers);
 });
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const teacher = await service.findOne(id);
-  res.json(teacher);
-});
-router.post('/', async (req, res) => {
-  const body = req.body;
-  const student = await service.create(body);
-  res.status(200).json(student);
-});
+router.get('/:id',
+  validatorHandler(getTeacherSchema, 'params'),
+  async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const teacher = await service.findOne(id);
+    res.json(teacher);
+  } catch (error) {
+    next(error);
+  }
 
-router.patch('/:id', async (req, res) => {
-  const { id } = req.params;
-  const body = req.body;
-  const teacherChanges = await service.update(id, body);
-  res.json(teacherChanges)
 });
 
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  const teacher = await service.delete(id);
-  res.json(teacher);
+router.post('/',
+  validatorHandler(createTeacherSchema, 'body'),
+  async (req, res, next) => {
+  try {
+    const body = req.body;
+    const student = await service.create(body);
+    res.status(200).json(student);
+  } catch (error) {
+    next(error);
+  }
+
 });
 
+router.patch('/:id',
+  validatorHandler(getTeacherSchema, 'params'),
+  validatorHandler(updateTeacherSchema, 'body'),
+  async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const teacherChanges = await service.update(id, body);
+    res.json(teacherChanges)
+  } catch (error) {
+    next(error);
+  }
 
+});
+
+router.delete('/:id',
+  validatorHandler(getTeacherSchema, 'params'),
+  async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const teacher = await service.delete(id);
+    res.json(teacher);
+  } catch (error) {
+    next(error);
+  }
+
+});
 
 module.exports = router;

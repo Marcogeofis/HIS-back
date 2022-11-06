@@ -1,6 +1,8 @@
 const express = require('express');
 const CoursesService = require('../services/courses.service');
 
+const validatorHandler = require('../middlewares/validator.handler');
+const {createCourseSchema, updateCourseSchema, getCourseSchema} = require('../schemas/courses.schema')
 const router = express.Router();
 const service = new CoursesService();
 
@@ -10,35 +12,64 @@ Ya que creamos router, procedemos a crear el CRUD.
 */
 
 
-router.get('/', async (req, res) => {
-  const courses = await service.find();
-  res.json(courses);
+router.get('/', async (req, res, next) => {
+    const courses = await service.find();
+    res.json(courses);
 });
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  // const idInteger = parseInt(id);  pasandolo a tipo number para que lo pueda leer
-  const course = await service.findOne(id);
-  res.json(course);
+router.get('/:id',
+  validatorHandler(getCourseSchema, 'params'),
+  async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    // const idInteger = parseInt(id);  pasandolo a tipo number para que lo pueda leer
+    const course = await service.findOne(id);
+    res.json(course);
+  } catch (error) {
+    next(error);
+  }
+
 });
 
-router.post('/', async (req, res) =>{
-  const body = req.body;
-  const newCourse = await service.create(body);
-  res.status(200).json(newCourse)
+router.post('/',
+  validatorHandler(createCourseSchema, 'body'),
+  async (req, res, next) =>{
+  try{
+    const body = req.body;
+    const newCourse = await service.create(body);
+    res.status(200).json(newCourse)
+  }catch(error){
+    next(error);
+  }
+
 });
 
-router.patch('/:id', async (req, res)=>{
-  const { id } = req.params;
-  const body = req.body;
-  const course = await service.update(id, body);
-  res.json(course)
+router.patch('/:id',
+  validatorHandler(getCourseSchema, 'params'),
+  validatorHandler(updateCourseSchema, 'body'),
+  async (req, res, next)=>{
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const course = await service.update(id, body);
+    res.json(course);
+  } catch (error) {
+    next(error);
+  }
+
 })
 
-router.delete('/:id', async (req, res)=>{
-  const { id } = req.params;
-  const course = await service.delete(id);
-  res.json(course)
+router.delete('/:id',
+  validatorHandler(getCourseSchema, 'params'),
+  async (req, res, next)=>{
+  try {
+    const { id } = req.params;
+    const course = await service.delete(id);
+    res.json(course)
+  } catch (error) {
+    next(error);
+  }
+
 })
 
 

@@ -1,15 +1,17 @@
 const evaluationStudent = [{
-  id_alumno: "1",
-  nivel: "Básico",
-  name:	"Armando",
+  id: "1",
+  degree: "Básico",
+  studentMail:	"armando@hotmail.com",
   Listening: 8,
   Speaking: 7,
   Reading: 9,
   Writing: 6,
-  Participación: "1 pt",
-  Homeworks: "1 pt",
+  Participacion: 1,
+  Homeworks: 1,
   Status: "Contento, Triste, Enojado, Frustrado, Disperso",
 }]
+
+const boom = require('@hapi/boom');
 
 class EvaluationStudent{
   constructor(){
@@ -30,17 +32,16 @@ class EvaluationStudent{
 
   async findOne(id){
     const index = this.evaluation.find(item => item.id_alumno === id);
-    if(index === -1){
-      throw new Error('NO se encontro boleta');
-    }else {
-      return index;
+    if(!index){
+      throw boom.notFound('Lo sentimos, No tenemos tu evaluación');
     }
+    return index;
   }
 
   async update(id, change){
     const index = this.evaluation.findIndex(item => item.id_alumno === id);
     if(index === -1){
-      throw new Error('NO se encontro boleta');
+      throw boom.notFound('Lo sentimos, No tenemos tu evaluación');
     }else {
       const teacherModified = this.evaluation[index];
       this.evaluation[index] = {
@@ -54,7 +55,7 @@ class EvaluationStudent{
   async delete(id){
     const index = this.evaluation.findIndex(item => item.id_alumno === id)
     if(index === -1){
-      throw new Error('No encontramos la boleta ')
+      throw boom.notFound('Lo sentimos, No tenemos tu evaluación');
     }else{
       this.evaluation.splice(index, 1)
       return { id };

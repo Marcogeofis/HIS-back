@@ -1,12 +1,15 @@
 const levelcourse = [{
   id:"1",
-  level: "Básico",
-  topic: "Alfabeto Fonético",
+  degree: "Basic",
+  gradeSection: "Basic A",
+  nameChapter: "Alfabeto Fonético vocales",
   video: "Introduccion al curso",
-  audios: "Ninguno",
-  imagenes: "imagen1.jpg",
-  vocabulario: "word12"
+  audio: "Ninguno",
+  image: "imagen1.jpg",
+  vocabulary: "word12"
 }]
+
+const boom = require('@hapi/boom');
 
 class LevelCourse{
   constructor(){
@@ -27,17 +30,17 @@ class LevelCourse{
 
   async findOne(id){
     const index = this.course.find(item => item.id === id);
-    if(index === -1){
-      throw new Error('NO se encontro usuario');
-    }else {
-      return index;
+    if(!index){
+      throw boom.notFound('Lo sentimos, No tenemos ese curso');
     }
+    return index;
+
   }
 
   async update(id, change){
     const index = this.course.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error('NO se encontro usuario');
+      throw boom.notFound('Lo sentimos, No tenemos ese curso');
     }else {
       const courseModified = this.course[index];
       this.course[index] = {
@@ -51,7 +54,7 @@ class LevelCourse{
   async delete(id){
     const index = this.course.findIndex(item => item.id ===id);
     if (index === -1){
-      throw new Error('Curso no encontrado');
+      throw boom.notFound('Lo sentimos, No tenemos ese curso');
     }else{
       this.course.splice(index, 1);
       return {id};

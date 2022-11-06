@@ -1,12 +1,13 @@
 const scheduleClass = [{
   id:"1",
-  level: "Básico",
-  apartado: "Básico 1A",
-  profesor: "Marco Antonio",
-  horas: "1:00",
-  empieza: "10:00 am",
-  termina: "11:00 am",
+  teacherMail: "marco@yahoo.com",
+  hrs: 8,
+  start: '08:00:00',
+  end: '09:00:00',
+  period: '16 sept del 2022',
 }]
+
+const boom = require('@hapi/boom');
 
 class ScheduleBB{
   constructor(){
@@ -27,17 +28,17 @@ class ScheduleBB{
 
   async findOne(id){
     const index = this.schedule.find(item => item.id === id);
-    if(index === -1){
-      throw new Error('NO se encontro usuario');
-    }else {
-      return index;
+    if(!index){
+      throw boom.notFound('Lo sentimos, No tenemos ese horario');
     }
+    return index;
+
   }
 
   async update(id, change){
     const index = this.schedule.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error('NO se encontro usuario');
+      throw boom.notFound('Lo sentimos, No tenemos ese horario');
     }else {
       const scheduleModified = this.schedule[index];
       this.schedule[index] = {
@@ -51,7 +52,7 @@ class ScheduleBB{
   async delete(id){
     const index = this.schedule.findIndex(item => item.id ===id);
     if (index === -1){
-      throw new Error('Curso no encontrado');
+      throw boom.notFound('Lo sentimos, No tenemos ese horario');
     }else{
       this.schedule.splice(index, 1);
       return {id};

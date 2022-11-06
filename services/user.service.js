@@ -6,8 +6,9 @@ const student = [{
   edad: 23,
   email: "geronimo@gmail.com",
   password: "fasdjkfa",
-  nivel: "Básico"
 }]
+
+const boom = require('@hapi/boom');
 
 class UserStudent{
   constructor(){
@@ -28,17 +29,17 @@ class UserStudent{
 
   async findOne(id){
     const index = this.user.find(item => item.id === id);
-    if(index === -1){
-      throw new Error('NO se encontro usuario');
-    }else {
-      return index;
+    if(!index){
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }
+    return index;
+
   }
 
   async update(id, change){
     const index = this.user.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error('NO se encontro usuario');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }else {
       const usermodified = this.user[index];
       this.user[index] = {
@@ -52,7 +53,7 @@ class UserStudent{
   async delete(id){
     const index = this.user.findIndex(item => item.id ===id);
     if (index === -1){
-      throw new Error('Curso no encontrado');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }else{
       this.user.splice(index, 1);
       return {id};

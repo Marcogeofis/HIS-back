@@ -1,7 +1,11 @@
 const express = require('express');
+const routerApi = require('./router');
+const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler');
+
+
 const app = express();
 const port = 3000;
-const routerApi = require('./router');
+
 // const mysql = require('mysql');
 // const { insert, read, update, remove } = require('./operations/operations');
 // const { insertPool, readPool, updatePool, removePool } = require('./operations/operations-pool');
@@ -98,7 +102,11 @@ app.get('/', (req, res) => {
 //   })
 // });
 
-routerApi(app)
+routerApi(app);
+app.use(logErrors);
+app.use(boomErrorHandler);
+app.use(errorHandler);
+
 
 app.listen(port, ()=>{
   console.log('El puerto se le vanto en ' + port);
