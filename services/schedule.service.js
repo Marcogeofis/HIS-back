@@ -29,7 +29,7 @@ class ScheduleBB{
   async findOne(id){
     const index = this.schedule.find(item => item.id === id);
     if(!index){
-      throw boom.notFound('Lo sentimos, No tenemos ese horario');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }
     return index;
 
@@ -38,7 +38,7 @@ class ScheduleBB{
   async update(id, change){
     const index = this.schedule.findIndex(item => item.id === id);
     if(index === -1){
-      throw boom.notFound('Lo sentimos, No tenemos ese horario');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }else {
       const scheduleModified = this.schedule[index];
       this.schedule[index] = {
@@ -52,7 +52,7 @@ class ScheduleBB{
   async delete(id){
     const index = this.schedule.findIndex(item => item.id ===id);
     if (index === -1){
-      throw boom.notFound('Lo sentimos, No tenemos ese horario');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }else{
       this.schedule.splice(index, 1);
       return {id};

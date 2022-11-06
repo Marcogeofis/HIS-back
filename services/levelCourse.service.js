@@ -31,7 +31,7 @@ class LevelCourse{
   async findOne(id){
     const index = this.course.find(item => item.id === id);
     if(!index){
-      throw boom.notFound('Lo sentimos, No tenemos ese curso');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }
     return index;
 
@@ -40,7 +40,7 @@ class LevelCourse{
   async update(id, change){
     const index = this.course.findIndex(item => item.id === id);
     if(index === -1){
-      throw boom.notFound('Lo sentimos, No tenemos ese curso');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }else {
       const courseModified = this.course[index];
       this.course[index] = {
@@ -54,7 +54,7 @@ class LevelCourse{
   async delete(id){
     const index = this.course.findIndex(item => item.id ===id);
     if (index === -1){
-      throw boom.notFound('Lo sentimos, No tenemos ese curso');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }else{
       this.course.splice(index, 1);
       return {id};

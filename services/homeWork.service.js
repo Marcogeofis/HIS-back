@@ -29,7 +29,7 @@ class StudentHomework{
   async  findOne(id){
     const index = this.homework.find(item => item.id === id);
     if(!index){
-      throw boom.notFound('Lo sentimos, curso no encontrado');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }
     return index;
   }
@@ -37,7 +37,7 @@ class StudentHomework{
   async update(id, change){
     const index = this.homework.findIndex(item => item.id === id);
     if(index === -1){
-      throw boom.notFound('Lo sentimos, No tenemos tu evaluación');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }else {
       const homeWorkModified = this.homework[index];
       this.homework[index] = {
@@ -52,7 +52,7 @@ class StudentHomework{
   async delete(id){
     const index = this.homework.findIndex(item => item.id === id)
     if(index === -1){
-      throw boom.notFound('Lo sentimos, No tenemos tu evaluación');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }else{
       this.homework.splice(index, 1)
       return { id };

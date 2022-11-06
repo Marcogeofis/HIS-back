@@ -39,10 +39,10 @@ class CoursesService{
   async  findOne(id){
     const course = this.courses.find(item => item.id === id);
     if(!course){
-      throw boom.notFound('Lo sentimos, curso no encontrado');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }
     if(course.isBlock){
-      throw boom.conflict('Lo sentimos, aun no estás listo para este curso')
+      throw boom.conflict('Lo sentimos, No encontramos resultados')
     }
     return course;
   }
@@ -50,7 +50,7 @@ class CoursesService{
   async update(id, change){
     const index = this.courses.findIndex(item => item.id === id);
     if(index === -1){
-      throw boom.notFound('Lo sentimos, curso no encontrado');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }else {
       const course = this.courses[index];
       this.courses[index] = {

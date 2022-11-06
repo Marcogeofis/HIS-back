@@ -33,7 +33,7 @@ class EvaluationStudent{
   async findOne(id){
     const index = this.evaluation.find(item => item.id_alumno === id);
     if(!index){
-      throw boom.notFound('Lo sentimos, No tenemos tu evaluación');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }
     return index;
   }
@@ -41,7 +41,7 @@ class EvaluationStudent{
   async update(id, change){
     const index = this.evaluation.findIndex(item => item.id_alumno === id);
     if(index === -1){
-      throw boom.notFound('Lo sentimos, No tenemos tu evaluación');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }else {
       const teacherModified = this.evaluation[index];
       this.evaluation[index] = {
@@ -55,7 +55,7 @@ class EvaluationStudent{
   async delete(id){
     const index = this.evaluation.findIndex(item => item.id_alumno === id)
     if(index === -1){
-      throw boom.notFound('Lo sentimos, No tenemos tu evaluación');
+      throw boom.notFound('Lo sentimos, No encontramos resultados');
     }else{
       this.evaluation.splice(index, 1)
       return { id };
