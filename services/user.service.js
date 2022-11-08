@@ -1,18 +1,13 @@
-const student = [{
-  id:"1",
-  nombre: "Geronimo Alex",
-  apellidoPaterno: "Perez",
-  apellidoMaterno: "Lore",
-  edad: 23,
-  email: "geronimo@gmail.com",
-  password: "fasdjkfa",
-}]
-
+const pool = require('../libs/postgres.pool');
 const boom = require('@hapi/boom');
+// const getConnection = require('../libs/postgres');
+
 
 class UserStudent{
   constructor(){
-    this.user = student;
+    // this.user = student;
+    this.pool = pool;
+    this.pool.on('error', (err)=> console.error(err));
   }
 
   async create(data){
@@ -24,7 +19,15 @@ class UserStudent{
   }
 
   async find(){
-    return this.user;
+    /*sin pool */
+    // const client = await getConnection();
+    // const rta = await client.query('SELECT * FROM student');
+    // return rta.rows;
+
+    /*Con pool */
+    const query = 'SELECT * FROM student';
+    const rta = await this.pool.query(query);
+    return rta;
   }
 
   async findOne(id){

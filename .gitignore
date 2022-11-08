@@ -215,6 +215,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# db
+postgres_data
+
 comando-Mysql
 
 # End of https://www.toptal.com/developers/gitignore/api/node,linux,windows,macos
