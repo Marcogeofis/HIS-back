@@ -1,63 +1,38 @@
-const studentHomeworkData = [{
-  id: "1",
-  studentMail: "lorena332@yahoo.com",
-  chapter: "Alfabeto fonético vocales",
-  video: "Mi tarea1 de video",
-  audio: "Mi tarea1 de audio",
-}];
-
+const { models } = require('../libs/sequelize');
 const boom = require('@hapi/boom');
 
 class StudentHomework{
-  constructor(){
-    this.homework = studentHomeworkData;
-  }
+  constructor(){}
 
   async create(data){
-    const newHomework = {
-      ...data,
-    };
-    this.homework.push(newHomework);
-    return newHomework
-
+    const newHomework = await models.Homework.create(data);
+    return newHomework;
   }
 
   async find(){
-    return this.homework;
+    const homeWorks = await models.Homework.findAll();
+    return homeWorks;
   }
 
   async  findOne(id){
-    const index = this.homework.find(item => item.id === id);
-    if(!index){
+    const homeWork = await models.Homework.findByPk(id);
+    if(!homeWork){
       throw boom.notFound('Lo sentimos, No encontramos resultados');
     }
-    return index;
+    return homeWork;
   }
 
   async update(id, change){
-    const index = this.homework.findIndex(item => item.id === id);
-    if(index === -1){
-      throw boom.notFound('Lo sentimos, No encontramos resultados');
-    }else {
-      const homeWorkModified = this.homework[index];
-      this.homework[index] = {
-        ...homeWorkModified,
-        ...change
-      }
-    }
-    return this.homework[index];
+    const homeWork = await this.findOne(id);
+    const rta = await homeWork.update(change);
+    return rta;
   }
 
 
   async delete(id){
-    const index = this.homework.findIndex(item => item.id === id)
-    if(index === -1){
-      throw boom.notFound('Lo sentimos, No encontramos resultados');
-    }else{
-      this.homework.splice(index, 1)
-      return { id };
-    }
-
+    const homeWork = await this.findOne(id);
+    await homeWork.destroy();
+    return { id };
   }
 
 }

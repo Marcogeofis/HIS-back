@@ -1,13 +1,14 @@
 const Joi = require('joi');
 
-const id = Joi.string();
-const studentMail = Joi.string();
+const id = Joi.number().integer();
+const name =	Joi.string().max(100);
+const studentMail = Joi.string().max(100);
 const chapter = Joi.string().max(200);
 const video = Joi.string();
 const audio = Joi.string();
 
 const createHworkSchema = Joi.object({
-  id: id.required(),
+  name: name.required(),
   studentMail: studentMail.required(),
   chapter: chapter.required(),
   video: video.required(),
@@ -15,6 +16,7 @@ const createHworkSchema = Joi.object({
 });
 
 const updateHworkSchema = Joi.object({
+  name: name,
   studentMail: studentMail,
   chapter: chapter,
   video: video,

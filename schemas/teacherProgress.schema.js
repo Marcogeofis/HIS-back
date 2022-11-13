@@ -1,7 +1,8 @@
 const Joi = require('joi');
 
-const id = Joi.string();
-const teacherMail = Joi.string().max(60);
+const id = Joi.number().integer();
+const name = Joi.string().max(100);
+const teacherMail = Joi.string().max(100);
 const actitud = Joi.string();
 const comunication = Joi.string();
 const patient = Joi.string();
@@ -9,7 +10,7 @@ const suggestion = Joi.string();
 
 
 const createTeacherProgressSchema = Joi.object({
-  id: id.required(),
+  name: name.required(),
   teacherMail: teacherMail.required(),
   actitud: actitud.required(),
   comunication: comunication.required(),
@@ -18,6 +19,7 @@ const createTeacherProgressSchema = Joi.object({
 });
 
 const updateTeacherProgressSchema = Joi.object({
+  name: name,
   teacherMail: teacherMail,
   actitud: actitud,
   comunication: comunication,

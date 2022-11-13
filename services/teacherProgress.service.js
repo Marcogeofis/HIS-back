@@ -6,57 +6,40 @@ const teacherProgressData = [{
   patient: "Very good",
   suggestion:"que el profesor sea más dinámico",
 }]
-
+const { models } = require('../libs/sequelize');
 const boom = require('@hapi/boom');
 
 class teacherProgress{
-  constructor(){
-    this.teacherProgress = teacherProgressData;
-  }
+  constructor(){}
 
   async create(data){
-    const newProgressTeacher = {
-      ...data
-    };
-    this.teacherProgress.push(newProgressTeacher);
+    const newProgressTeacher = await models.TeacherProgress.create(data)
     return newProgressTeacher;
   }
 
   async find(){
-    return this.teacherProgress;
+    const allProgressTeachers = await models.TeacherProgress.findAll()
+    return allProgressTeachers;
   }
 
   async findOne(id){
-    const index = this.teacherProgress.find(item => item.id === id);
-    if(!index){
+    const progressTeacher = await models.TeacherProgress.findByPk(id);
+    if(!progressTeacher){
       throw boom.notFound('Lo sentimos, No encontramos resultados');
     }
-    return index;
-
+    return progressTeacher;
   }
 
   async update(id, change){
-    const index = this.teacherProgress.findIndex(item => item.id === id);
-    if(index === -1){
-      throw boom.notFound('Lo sentimos, No encontramos resultados');
-    }else {
-      const teacherProgressmodified = this.teacherProgress[index];
-      this.teacherProgress[index] = {
-        ...teacherProgressmodified,
-        ...change
-      }
-    }
-    return this.teacherProgress[index];
+    const progressTeacher = await this.findOne(id);
+    const rta = await progressTeacher.update(change);
+    return rta;
   }
 
   async delete(id){
-    const index = this.teacherProgress.findIndex(item => item.id ===id);
-    if (index === -1){
-      throw boom.notFound('Lo sentimos, No encontramos resultados');
-    }else{
-      this.teacherProgress.splice(index, 1);
-      return {id};
-    }
+    const progressTeacher = await this.findOne(id);
+    await progressTeacher.destroy();
+    return { id };
   }
 }
 

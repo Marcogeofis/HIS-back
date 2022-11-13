@@ -1,7 +1,8 @@
 const Joi = require('joi');
 
-const id = Joi.string();
-const teacherMail = Joi.string().max(50);
+const id = Joi.number().integer();
+const name = Joi.string().max(100);
+const teacherMail = Joi.string().max(100);
 const hrs = Joi.number().integer();
 const start = Joi.string();
 const end = Joi.string();
@@ -9,7 +10,7 @@ const period = Joi.string();
 
 
 const createScheduleSchema = Joi.object({
-  id: id.required(),
+  name: name.required(),
   teacherMail: teacherMail.required(),
   hrs: hrs.required(),
   start: start.required(),
@@ -18,11 +19,12 @@ const createScheduleSchema = Joi.object({
 });
 
 const updateScheduleSchema = Joi.object({
-  teacherMail: teacherMail.required(),
-  hrs: hrs.required(),
-  start: start.required(),
-  end: end.required(),
-  period: period.required(),
+  name: name,
+  teacherMail: teacherMail,
+  hrs: hrs,
+  start: start,
+  end: end,
+  period: period,
 });
 
 const getScheduleSchema = Joi.object({

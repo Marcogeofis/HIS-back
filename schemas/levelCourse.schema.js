@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const id = Joi.string();
+const id = Joi.number().integer();
 const degree = Joi.string().max(50);
 const gradeSection = Joi.string().max(50);
 const nameChapter = Joi.string().max(100);
@@ -11,8 +11,6 @@ const vocabulary = Joi.string().max(50);
 
 
 const createLevelCourseSchema = Joi.object({
-
-  id: id.required(),
   degree: degree.required(),
   gradeSection: gradeSection.required(),
   nameChapter: nameChapter.required(),
@@ -23,7 +21,6 @@ const createLevelCourseSchema = Joi.object({
 });
 
 const updateLevelCourseSchema = Joi.object({
-
   degree: degree,
   gradeSection: gradeSection,
   nameChapter: nameChapter,

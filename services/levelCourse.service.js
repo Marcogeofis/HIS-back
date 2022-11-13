@@ -1,64 +1,37 @@
-const levelcourse = [{
-  id:"1",
-  degree: "Basic",
-  gradeSection: "Basic A",
-  nameChapter: "Alfabeto Fonético vocales",
-  video: "Introduccion al curso",
-  audio: "Ninguno",
-  image: "imagen1.jpg",
-  vocabulary: "word12"
-}]
-
+const { models } = require('../libs/sequelize');
 const boom = require('@hapi/boom');
 
 class LevelCourse{
-  constructor(){
-    this.course = levelcourse;
-  }
+  constructor(){}
 
   async create(data){
-    const newCourse = {
-      ...data
-    };
-    this.course.push(newCourse);
-    return newCourse;
+    const newLevelCourse = await models.LevelCourse.create(data)
+    return newLevelCourse;
   }
 
   async find(){
-    return this.course;
+    const levelCourses = await models.LevelCourse.findAll();
+    return levelCourses;
   }
 
   async findOne(id){
-    const index = this.course.find(item => item.id === id);
-    if(!index){
+    const levelCourse = await models.LevelCourse.findByPk(id);
+    if(!levelCourse){
       throw boom.notFound('Lo sentimos, No encontramos resultados');
     }
-    return index;
-
+    return levelCourse;
   }
 
   async update(id, change){
-    const index = this.course.findIndex(item => item.id === id);
-    if(index === -1){
-      throw boom.notFound('Lo sentimos, No encontramos resultados');
-    }else {
-      const courseModified = this.course[index];
-      this.course[index] = {
-        ...courseModified,
-        ...change
-      }
-    }
-    return this.course[index];
+    const levelCourse = await this.findOne(id);
+    const rta = await levelCourse.update(change);
+    return rta;
   }
 
   async delete(id){
-    const index = this.course.findIndex(item => item.id ===id);
-    if (index === -1){
-      throw boom.notFound('Lo sentimos, No encontramos resultados');
-    }else{
-      this.course.splice(index, 1);
-      return {id};
-    }
+    const levelCourse = await this.findOne(id);
+    await levelCourse.destroy();
+    return { id };
   }
 }
 

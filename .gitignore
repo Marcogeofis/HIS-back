@@ -219,5 +219,6 @@ $RECYCLE.BIN/
 postgres_data
 
 comando-Mysql
+operations
 
 # End of https://www.toptal.com/developers/gitignore/api/node,linux,windows,macos

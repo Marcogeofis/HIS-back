@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const id = Joi.string();
+const id = Joi.number().integer();
 const tegusto = Joi.string();
 const queGustoMas = Joi.string();
 const queNoGusto = Joi.string();
@@ -9,7 +9,6 @@ const meRecomiendas = Joi.string();
 
 
 const createAppBBSchema = Joi.object({
-  id: id.required(),
   tegusto: tegusto.required(),
   queGustoMas: queGustoMas.required(),
   queNoGusto: queNoGusto.required(),

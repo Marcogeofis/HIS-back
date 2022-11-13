@@ -1,60 +1,37 @@
-const appBB = [{
-  id: "1",
-  tegusto: "si",
-  queGustoMas: "las clases",
-  queNoGusto: "más imagenes",
-  suggestions: "La clase es muy divertida muy amena, el profesor es muy dinámico",
-  meRecomiendas: "si",
-}]
+const { models } = require('../libs/sequelize');
+const boom = require('@hapi/boom');
 
 class AppBBProgress{
-  constructor(){
-    this.app = appBB;
-  }
+  constructor(){}
 
   async create(data){
-    const newAppBB = {
-      ...data
-    };
-    this.app.push(newAppBB);
+    const newAppBB = await models.AppBB.create(data);
     return newAppBB;
   }
 
   async find(){
-    return this.app;
+    const appBBResults = await models.AppBB.findAll();
+    return appBBResults;
   }
 
   async findOne(id){
-    const index = this.app.find(item => item.id === id);
-    if(!index){
+    const appBBResult = await models.AppBB.findByPk(id);
+    if(!appBBResult){
       throw boom.notFound('Lo sentimos, No encontramos resultados');
     }
-    return index;
-
+    return appBBResult;
   }
 
   async update(id, change){
-    const index = this.app.findIndex(item => item.id === id);
-    if(index === -1){
-      throw boom.notFound('Lo sentimos, No encontramos resultados');
-    }else {
-      const appBBModified = this.app[index];
-      this.app[index] = {
-        ...appBBModified,
-        ...change
-      }
-    }
-    return this.app[index];
+    const appBBModify = await this.findOne(id);
+    const rta = await appBBModify.update(change);
+    return rta;
   }
 
   async delete(id){
-    const index = this.app.findIndex(item => item.id ===id);
-    if (index === -1){
-      throw boom.notFound('Lo sentimos, No encontramos resultados');
-    }else{
-      this.app.splice(index, 1);
-      return {id};
-    }
+    const appBBResult = await this.findOne(id);
+    await appBBResult.destroy();
+    return { id };
   }
 
 }

@@ -4,8 +4,8 @@ const router = express.Router();
 
 const validatorHandler = require('../middlewares/validator.handler');
 const { getClassSchema, updateClassSchema, createClassSchema } = require('../schemas/class.schema');
-const ClassOfCourseSevice = require('../services/class.service');
-const service = new ClassOfCourseSevice();
+const ClassToCourseSevice = require('../services/class.service');
+const service = new ClassToCourseSevice();
 
 router.get('/', async (req, res, next) => {
   const classCourse = await service.find();

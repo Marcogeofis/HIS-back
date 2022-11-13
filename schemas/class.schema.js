@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
-const id = Joi.string();
-const id_period = Joi.string();
+const id = Joi.number().integer();
+const id_period = Joi.number().integer();
 const degree = Joi.string();
 const gradeSection = Joi.string();
 const teacherMail = Joi.string();
@@ -11,7 +11,6 @@ const classEnds = Joi.string();
 
 
 const createClassSchema = Joi.object({
-  id: id.required(),
   id_period: id_period.required(),
   degree: degree.required(),
   gradeSection: gradeSection.required(),

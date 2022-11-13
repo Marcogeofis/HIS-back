@@ -1,65 +1,38 @@
-const classOfCourse = [{
-  id: "1",
-  id_period:"sept a oct del 2022",
-  degree: "Basic",
-  gradeSection: "Basic A",
-  teacherMail: "rhcplb85@hotmail.com",
-  studentMail: "lorena332@yahoo.com",
-  classBegins: "08:00:00",
-  classEnds: "09:00:00",
-}]
-
+const { models } = require('../libs/sequelize')
 const boom = require('@hapi/boom');
 
-class ClassOfCourse{
-  constructor(){
-    this.classCourse = classOfCourse;
-  }
+class ClassToCourse{
+  constructor(){}
 
   async create(data){
-    const newClass = {
-      ...data
-    };
-    this.classCourse.push(newClass);
+    const newClass = await models.ClassOfCourse.create(data);
     return newClass;
   }
 
   async find(){
-    return this.classCourse;
+    const allClass = await models.ClassOfCourse.findAll();
+    return allClass;
   }
 
   async findOne(id){
-    const index = this.classCourse.find(item => item.id === id);
-    if(!index){
+    const oneClass = await models.ClassOfCourse.findByPk(id);
+    if(!oneClass){
       throw boom.notFound('Lo sentimos, No encontramos resultados');
     }
-    return index;
-
+    return oneClass;
   }
 
   async update(id, change){
-    const index = this.classCourse.findIndex(item => item.id === id);
-    if(index === -1){
-      throw boom.notFound('Lo sentimos, No encontramos resultados');
-    }else {
-      const ClassModified = this.classCourse[index];
-      this.classCourse[index] = {
-        ...ClassModified,
-        ...change
-      }
-    }
-    return this.classCourse[index];
+    const oneClass = await this.findOne(id);
+    const rta = await oneClass.update(change);
+    return rta;
   }
 
   async delete(id){
-    const index = this.classCourse.findIndex(item => item.id ===id);
-    if (index === -1){
-      throw boom.notFound('Lo sentimos, No encontramos resultados');
-    }else{
-      this.classCourse.splice(index, 1);
-      return {id};
-    }
+    const oneClass = await this.findOne(id);
+    await oneClass.destroy();
+    return { id };
   }
 }
 
-module.exports = ClassOfCourse;
+module.exports = ClassToCourse;

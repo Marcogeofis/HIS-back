@@ -1,62 +1,37 @@
-const scheduleClass = [{
-  id:"1",
-  teacherMail: "marco@yahoo.com",
-  hrs: 8,
-  start: '08:00:00',
-  end: '09:00:00',
-  period: '16 sept del 2022',
-}]
-
+const { models } = require('../libs/sequelize');
 const boom = require('@hapi/boom');
 
 class ScheduleBB{
-  constructor(){
-    this.schedule = scheduleClass;
-  }
+  constructor(){}
 
   async create(data){
-    const newSchedule = {
-      ...data
-    };
-    this.schedule.push(newSchedule);
+    const newSchedule = await models.Schedule.create(data)
     return newSchedule;
   }
 
   async find(){
-    return this.schedule;
+    const allSchedule = await models.Schedule.findAll();
+    return allSchedule;
   }
 
   async findOne(id){
-    const index = this.schedule.find(item => item.id === id);
-    if(!index){
+    const schedule = await models.Schedule.findByPk(id);
+    if(!schedule){
       throw boom.notFound('Lo sentimos, No encontramos resultados');
     }
-    return index;
-
+    return schedule;
   }
 
   async update(id, change){
-    const index = this.schedule.findIndex(item => item.id === id);
-    if(index === -1){
-      throw boom.notFound('Lo sentimos, No encontramos resultados');
-    }else {
-      const scheduleModified = this.schedule[index];
-      this.schedule[index] = {
-        ...scheduleModified,
-        ...change
-      }
-    }
-    return this.schedule[index];
+    const schedule = await this.findOne(id);
+    const rta = await schedule.update(change);
+    return rta;
   }
 
   async delete(id){
-    const index = this.schedule.findIndex(item => item.id ===id);
-    if (index === -1){
-      throw boom.notFound('Lo sentimos, No encontramos resultados');
-    }else{
-      this.schedule.splice(index, 1);
-      return {id};
-    }
+    const schedule = await this.findOne(id);
+    await schedule.destroy();
+    return { id };
   }
 }
 
