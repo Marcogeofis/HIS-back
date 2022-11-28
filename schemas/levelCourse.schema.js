@@ -1,37 +1,48 @@
 const Joi = require('joi');
 
 const id = Joi.number().integer();
-const degree = Joi.string().max(50);
-const gradeSection = Joi.string().max(50);
-const nameChapter = Joi.string().max(100);
-const video = Joi.string().max(50);
-const audio = Joi.string().max(50);
-const image = Joi.string().max(50);
-const vocabulary = Joi.string().max(50);
-
+const course = Joi.string().max(50);
+const section = Joi.string().max(100);
+const chapter = Joi.string().max(150);
+const video = Joi.string();
+const point1 = Joi.string();
+const point2 = Joi.string();
+const point3 = Joi.string();
+const point4 = Joi.string();
+const point5 = Joi.string();
+const context = Joi.string();
+const limit = Joi.number().integer();
+const offset = Joi.number().integer();
 
 const createLevelCourseSchema = Joi.object({
-  degree: degree.required(),
-  gradeSection: gradeSection.required(),
-  nameChapter: nameChapter.required(),
+  course: course.required(),
+  section: section.required(),
+  chapter: chapter.required(),
   video: video.required(),
-  audio: audio.required(),
-  image: image.required(),
-  vocabulary: vocabulary.required(),
+  context: context.required(),
 });
 
 const updateLevelCourseSchema = Joi.object({
-  degree: degree,
-  gradeSection: gradeSection,
-  nameChapter: nameChapter,
+  course: course,
+  section: section,
+  chapter: chapter,
   video: video,
-  audio: audio,
-  image: image,
-  vocabulary: vocabulary,
+  point1: point1,
+  point2: point2,
+  point3: point3,
+  point4: point4,
+  point5: point5,
+  context: context,
 });
 
 const getLevelCourseSchema = Joi.object({
   id: id.required(),
 });
 
-module.exports = { createLevelCourseSchema, updateLevelCourseSchema, getLevelCourseSchema }
+const queryLevelCourseSchema = Joi.object({
+  limit,
+  offset,
+  chapter,
+});
+
+module.exports = { createLevelCourseSchema, updateLevelCourseSchema, getLevelCourseSchema, queryLevelCourseSchema }

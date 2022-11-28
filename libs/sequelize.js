@@ -14,6 +14,8 @@ const sequelize = new Sequelize(URI, {
 });
 
 setupModels(sequelize);
-sequelize.sync();
+
+// quitamos esta linea  sequelize.sync() para poder la migración
+// sequelize.sync();
 
 module.exports = sequelize;

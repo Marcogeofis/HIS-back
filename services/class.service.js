@@ -10,7 +10,9 @@ class ClassToCourse{
   }
 
   async find(){
-    const allClass = await models.ClassOfCourse.findAll();
+    const allClass = await models.ClassOfCourse.findAll({
+      include: ['teacher', 'student'],
+    });
     return allClass;
   }
 

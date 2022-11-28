@@ -1,5 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const TEACHER_TABLE = require('./teacher.models');
 const TEACHERPROGRESS_TABLE = 'teacherProgress';
 
 const teacherProgressSchema = {
@@ -9,19 +10,11 @@ const teacherProgressSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  name:{
+  attitude:{
     allowNull: false,
     type: DataTypes.STRING,
   },
-  teacherMail:{
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  actitud:{
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  comunication:{
+  communication:{
     allowNull: false,
     type: DataTypes.STRING,
   },
@@ -38,12 +31,25 @@ const teacherProgressSchema = {
     type: DataTypes.DATE,
     field: 'created_at',
     defaultValue: Sequelize.NOW
-  }
+  },
+  teacherId:{
+    field: 'teacher_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    unique: true,
+    reference:{
+      models: TEACHER_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+
 }
 
 class TeacherProgress extends Model{
-  static associate(){
-    //associate
+  static associate(models){
+    this.belongsTo(models.Teacher, { as: 'teacher' })
   }
   static config(sequelize){
     return {

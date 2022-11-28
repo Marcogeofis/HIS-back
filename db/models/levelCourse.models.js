@@ -1,5 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const VOCABULARY_TABLE = require('./vocabulary.models');
 const LEVELCOURSE_TABLE = 'levelCourse';
 
 const levelCourseSchema ={
@@ -9,33 +10,55 @@ const levelCourseSchema ={
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  degree:{
+  course: {
     allowNull: false,
     type: DataTypes.STRING,
+    defaultValue: 'Level of course',
   },
-  gradeSection:{
+  section: {
     allowNull: false,
     type: DataTypes.STRING,
+    defaultValue: 'section of the course',
   },
-  nameChapter:{
+  chapter: {
     allowNull: false,
     type: DataTypes.STRING,
+    defaultValue: 'Chapter',
   },
-  video:{
+  video: {
     allowNull: false,
     type: DataTypes.STRING,
+    defaultValue: 'path of video',
   },
-  audio:{
+  point1: {
     allowNull: false,
     type: DataTypes.STRING,
+    defaultValue: 'Chapter´s resume',
   },
-  image:{
+  point2: {
     allowNull: false,
     type: DataTypes.STRING,
+    defaultValue: 'Chapter´s resume',
   },
-  vocabulary:{
+  point3: {
     allowNull: false,
     type: DataTypes.STRING,
+    defaultValue: 'Chapter´s resume',
+  },
+  point4: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: 'Chapter´s resume',
+  },
+  point5: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: 'Chapter´s resume',
+  },
+  context: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: 'Context of the Chapter',
   },
   createdAt:{
     allowNull: false,
@@ -47,7 +70,7 @@ const levelCourseSchema ={
 
 class LevelCourse extends Model{
   static associate(){
-    //associate
+
   }
   static config(sequelize){
     return {
@@ -59,4 +82,4 @@ class LevelCourse extends Model{
   }
 }
 
-module.exports ={ LEVELCOURSE_TABLE, levelCourseSchema, LevelCourse}
+module.exports ={ LEVELCOURSE_TABLE, levelCourseSchema, LevelCourse }

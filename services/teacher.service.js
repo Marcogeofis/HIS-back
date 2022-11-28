@@ -9,8 +9,25 @@ class Teacher{
     return newTeacher;
   }
 
-  async find(){
-    const teachers = await models.Teacher.findAll();
+  async find(query){
+
+    const options = {
+      include: ['classOfCourse', 'teacherProgres', 'teacherSchedule'],
+      where: {},
+    };
+
+    const { limit, offset } = query;
+    if(limit && offset){
+      options.limit = limit;
+      options.offset = offset;
+    }
+
+    const { lastName } = query;
+    if(lastName){
+      options.where.lastName = lastName;
+    }
+
+    const teachers = await models.Teacher.findAll(options);
     return teachers;
   }
 

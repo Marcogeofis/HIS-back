@@ -10,7 +10,9 @@ class EvaluationStudent{
   }
 
   async find(){
-    const allEvaluations = await models.EvaluationStudent.findAll();
+    const allEvaluations = await models.EvaluationStudent.findAll({
+      include: ['student'],
+    });
     return allEvaluations;
   }
 

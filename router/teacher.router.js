@@ -3,13 +3,19 @@ const router = express.Router();
 // Ya que creamos router, procdemos a crear el CRUD.
 
 const validatorHandler = require('../middlewares/validator.handler');
-const { createTeacherSchema, updateTeacherSchema, getTeacherSchema } = require('../schemas/teacher.schema');
+const { createTeacherSchema, updateTeacherSchema, getTeacherSchema, queryTeacherSchema } = require('../schemas/teacher.schema');
 const teacherSevice = require('../services/teacher.service');
 const service = new teacherSevice();
 
-router.get('/', async (req, res, next) => {
-  const teachers = await service.find();
-  res.json(teachers);
+router.get('/',
+  validatorHandler(queryTeacherSchema, 'query'),
+    async (req, res, next) => {
+      try {
+        const teachers = await service.find(req.query);
+        res.json(teachers);
+      } catch (error) {
+        next(error)
+      }
 });
 
 router.get('/:id',

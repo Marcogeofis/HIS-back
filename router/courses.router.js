@@ -1,15 +1,15 @@
 const express = require('express');
-const CoursesService = require('../services/courses.service');
-
-const validatorHandler = require('../middlewares/validator.handler');
-const {createCourseSchema, updateCourseSchema, getCourseSchema} = require('../schemas/courses.schema')
 const router = express.Router();
-const service = new CoursesService();
-
 /*
 Ya que creamos router, procedemos a crear el CRUD.
   C => create, R => replace, U => update, D => delete.
 */
+
+const validatorHandler = require('../middlewares/validator.handler');
+const { createCourseSchema, updateCourseSchema, getCourseSchema } = require('../schemas/courses.schema')
+const AllCoursesService = require('../services/courses.service');
+const service = new AllCoursesService();
+
 
 
 router.get('/', async (req, res, next) => {

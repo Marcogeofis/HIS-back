@@ -2,8 +2,7 @@ const Joi = require('joi');
 
 const id = Joi.number().integer();
 const degree = Joi.string();
-const name =	Joi.string().max(100);
-const studentMail =	Joi.string().max(100);
+const studentId =	Joi.number().integer();
 const listening = Joi.number().integer();
 const speaking = Joi.number().integer();
 const reading = Joi.number().integer();
@@ -14,8 +13,7 @@ const status = Joi.string().max(100);
 
 const createEvaluationStudentSchema = Joi.object({
   degree: degree.required(),
-  name: name.required(),
-  studentMail: studentMail.required(),
+  studentId: studentId.required(),
   listening: listening.required(),
   speaking: speaking.required(),
   reading: reading.required(),

@@ -9,8 +9,22 @@ class LevelCourse{
     return newLevelCourse;
   }
 
-  async find(){
-    const levelCourses = await models.LevelCourse.findAll();
+  async find(query){
+    const options = {
+      where: {},
+    }
+
+    const { limit, offset } = query;
+    if(limit && offset){
+      options.limit = limit;
+      options.offset = offset;
+    }
+
+    const { chapter } = query;
+    if(chapter){
+      options.where.chapter = chapter;
+    }
+    const levelCourses = await models.LevelCourse.findAll(options);
     return levelCourses;
   }
 

@@ -3,21 +3,18 @@ const Joi = require('joi');
 const id = Joi.number().integer();
 const level = Joi.string();
 const cost = Joi.number().integer();
-const isBlock = Joi.boolean();
-const id_discount = Joi.number().integer();
-
+const classSpecial = Joi.number().integer();
 
 const createCourseSchema = Joi.object({
   level: level.required(),
   cost: cost.required(),
-  isBlock: isBlock.required(),
-  id_discount: id_discount.required(),
+  classSpecial: classSpecial.required(),
 });
 
 const updateCourseSchema = Joi.object({
   level: level,
   cost: cost,
-  isBlock: isBlock,
+  classSpecial: classSpecial,
 });
 
 const getCourseSchema = Joi.object({

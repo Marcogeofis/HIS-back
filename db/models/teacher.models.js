@@ -8,8 +8,14 @@ const teacherSchema ={
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER,
+    unique: true,
   },
   name:{
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  lastName:{
+    field: 'last_name',
     allowNull: false,
     type: DataTypes.STRING,
   },
@@ -22,6 +28,11 @@ const teacherSchema ={
     allowNull: false,
     type: DataTypes.STRING,
   },
+  role:{
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: 'teacher'
+  },
   createdAt:{
     allowNull: false,
     type: DataTypes.DATE,
@@ -31,8 +42,22 @@ const teacherSchema ={
 }
 
 class Teacher extends Model{
-  static associate(){
-    //associate
+  static associate(models){
+    this.hasOne(models.ClassOfCourse, {
+      as: 'classOfCourse',
+      foreignKey: 'teacherId',
+    });
+
+    this.hasOne(models.TeacherProgress, {
+      as: 'teacherProgres',
+      foreignKey: 'teacherId',
+    });
+
+    this.hasOne(models.Schedule, {
+      as: 'teacherSchedule',
+      foreignKey: 'teacherId',
+    });
+
   }
   static config(sequelize){
     return {

@@ -1,5 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const STUDENT_TABLE = require('./student.models');
 const EVALUATION_STUDENT_TABLE = 'evaluationStudent';
 
 const evaluationStudentSchema ={
@@ -10,14 +11,6 @@ const evaluationStudentSchema ={
     type: DataTypes.INTEGER,
   },
   degree:{
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  name:{
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  studentMail:{
     allowNull: false,
     type: DataTypes.STRING,
   },
@@ -55,11 +48,23 @@ const evaluationStudentSchema ={
     field: 'created_at',
     defaultValue: Sequelize.NOW
   },
+  studentId:{
+    field: 'student_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    unique: true,
+    reference:{
+      models: STUDENT_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  }
 }
 
 class EvaluationStudent extends Model{
-  static associate(){
-    //associate
+  static associate(models){
+    this.belongsTo(models.Student, { as: 'student' });
   }
   static config(sequelize){
     return {

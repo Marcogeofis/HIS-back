@@ -1,5 +1,8 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const STUDENT_TABLE = require('./student.models');
+const TEACHER_TABLE = require('./teacher.models');
+
 const CLASSOFCOURSE_TABLE = 'classOfCourse';
 
 const classOfCourseSchema ={
@@ -7,10 +10,6 @@ const classOfCourseSchema ={
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
-  },
-  id_period:{
-    allowNull: false,
     type: DataTypes.INTEGER,
   },
   degree:{
@@ -21,10 +20,7 @@ const classOfCourseSchema ={
     allowNull: false,
     type: DataTypes.STRING,
   },
-  teacherMail: {
-    allowNull: false,
-    type: DataTypes.STRING,},
-  studentMail: {
+  day:{
     allowNull: false,
     type: DataTypes.STRING,
   },
@@ -42,12 +38,40 @@ const classOfCourseSchema ={
     field: 'created_at',
     defaultValue: Sequelize.NOW
   },
+  teacherId: {
+    field: 'teacher_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    unique: true,
+    reference:{
+      models: TEACHER_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  studentId: {
+    field: 'student_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    unique: true,
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+    reference: {
+      model: STUDENT_TABLE,
+      key: 'id',
+    }
+  },
+
 }
 
 class ClassOfCourse extends Model{
-  static associate(){
-    //associate
+
+  static associate(models){
+    this.belongsTo(models.Student, {as: 'student'});
+    this.belongsTo(models.Teacher, {as: 'teacher'});
   }
+
   static config(sequelize){
     return {
       sequelize,

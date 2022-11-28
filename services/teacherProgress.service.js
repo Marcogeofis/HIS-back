@@ -1,11 +1,3 @@
-const teacherProgressData = [{
-  id: "1",
-  teacherMail: "rhcpb85@hotmail.com",
-  actitud:"Good",
-  comunication: "Good",
-  patient: "Very good",
-  suggestion:"que el profesor sea más dinámico",
-}]
 const { models } = require('../libs/sequelize');
 const boom = require('@hapi/boom');
 
@@ -18,7 +10,9 @@ class teacherProgress{
   }
 
   async find(){
-    const allProgressTeachers = await models.TeacherProgress.findAll()
+    const allProgressTeachers = await models.TeacherProgress.findAll({
+      include: ['teacher'],
+    })
     return allProgressTeachers;
   }
 

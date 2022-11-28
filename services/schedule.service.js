@@ -10,7 +10,9 @@ class ScheduleBB{
   }
 
   async find(){
-    const allSchedule = await models.Schedule.findAll();
+    const allSchedule = await models.Schedule.findAll({
+      include: ['teacher'],
+    });
     return allSchedule;
   }
 

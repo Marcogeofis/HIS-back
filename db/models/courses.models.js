@@ -17,11 +17,7 @@
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-    isBlock:{
-      allowNull: false,
-      type: DataTypes.BOOLEAN,
-    },
-    id_discount:{
+    classSpecial: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
