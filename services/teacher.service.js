@@ -1,11 +1,17 @@
 const { models } = require('../libs/sequelize');
 const boom = require('@hapi/boom');
+const bcrypt = require('bcrypt');
 
 class Teacher{
   constructor(){}
 
   async create(data){
-    const newTeacher = await models.Teacher.create(data);
+    const hash = await bcrypt.hash(data.password, 10)
+    const newTeacher = await models.Teacher.create({
+      ...data,
+      password: hash,
+    });
+    delete newTeacher.dataValues.password;
     return newTeacher;
   }
 
@@ -29,6 +35,13 @@ class Teacher{
 
     const teachers = await models.Teacher.findAll(options);
     return teachers;
+  }
+
+  async findByEmail(email){
+    const rta = await models.Teacher.findOne({
+      where: { email }
+    });
+    return rta;
   }
 
   async findOne(id){

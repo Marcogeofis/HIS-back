@@ -14,6 +14,7 @@ const createTeacherSchema = Joi.object({
   lastName: lastName.required(),
   email: email.required(),
   password: password.required(),
+  role: role.required()
 });
 
 const updateTeacherSchema = Joi.object({

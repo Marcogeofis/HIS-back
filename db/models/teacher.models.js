@@ -70,3 +70,16 @@ class Teacher extends Model{
 }
 
 module.exports ={ TEACHER_TABLE, teacherSchema, Teacher };
+
+
+/*
+ esto lo tenemos que agregar al eschema para poder hacer la recuperacionde contraseña
+
+password:{
+    field: 'recovery_token',
+    allowNull: true,
+    type: DataTypes.STRING,
+  },
+
+
+ */

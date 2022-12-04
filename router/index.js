@@ -11,8 +11,10 @@ const classRouter = require('./class.router');
 const appBBRouter = require('./appBB.router');
 const tareasRouter = require('./homeWork.router');
 const vocabularyRouter = require('./vocabulary.router');
-const activeStudentesRouter = require('./activeStudent.router');
+const activeStudentsRouter = require('./activeStudent.router');
 const rollPlaysRouter = require('./rollPlays.router');
+const authRouter = require('./auth.router');
+
 
 function routerApi(app){
   const router = express.Router();
@@ -29,8 +31,9 @@ function routerApi(app){
   router.use('/appBB-progress', appBBRouter);
   router.use('/myhome-work', tareasRouter);
   router.use('/all-vocabulary', vocabularyRouter);
-  router.use('/active-students', activeStudentesRouter);
+  router.use('/active-students', activeStudentsRouter);
   router.use('/rollPlays', rollPlaysRouter);
+  router.use('/auth', authRouter)
 }
 
 module.exports = routerApi;

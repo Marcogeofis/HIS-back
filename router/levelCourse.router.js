@@ -1,15 +1,24 @@
 const express = require('express');
+const passport = require('passport');
+const { checkRoles } = require('../middlewares/auth.handler');
 const router = express.Router();
 // Ya que creamos router, procdemos a crear el CRUD.
 
 const validatorHandler = require('../middlewares/validator.handler');
-const { createLevelCourseSchema, updateLevelCourseSchema, getLevelCourseSchema} = require('../schemas/levelCourse.schema')
+const { createLevelCourseSchema, updateLevelCourseSchema, getLevelCourseSchema, queryLevelCourseSchema} = require('../schemas/levelCourse.schema')
 const levelCourseService = require('../services/levelCourse.service');
 const service = new levelCourseService();
 
-router.get('/', async (req, res, next) => {
-  const levelCourses = await service.find()
-  res.json(levelCourses);
+router.get('/',
+  validatorHandler(queryLevelCourseSchema, 'query'),
+  async (req, res, next) => {
+    try {
+      const levelCourses = await service.find(req.query);
+      res.json(levelCourses);
+    } catch (error) {
+      next(error);
+    }
+
 });
 
 router.get('/:id',
@@ -23,9 +32,12 @@ router.get('/:id',
     next(error)
   }
 
+
 });
 
 router.post('/',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('teacherAdmin', 'teacher'),
   validatorHandler(createLevelCourseSchema, 'body'),
   async (req, res, next) => {
   try {
@@ -39,6 +51,8 @@ router.post('/',
 });
 
 router.patch('/:id',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('teacherAdmin'),
   validatorHandler(getLevelCourseSchema, 'params'),
   validatorHandler(updateLevelCourseSchema, 'body'),
   async (req, res, next) => {
@@ -54,6 +68,8 @@ router.patch('/:id',
 });
 
 router.delete('/:id',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('teacherAdmin'),
   validatorHandler(getLevelCourseSchema, 'params'),
   async (req, res, next) => {
   try {
