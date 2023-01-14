@@ -29,14 +29,17 @@ const vocabularySchema = {
   exampleWrited1: {
     allowNull: false,
     type: DataTypes.STRING,
+    field: 'example 1',
   },
   exampleWrited2: {
     allowNull: false,
     type: DataTypes.STRING,
+    field: 'example 2',
   },
   exampleWrited3: {
     allowNull: false,
     type: DataTypes.STRING,
+    field: 'example 3',
   },
   synonymous: {
     allowNull: false,
@@ -46,9 +49,10 @@ const vocabularySchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  teoryOfWord: {
+  theoryOfWord: {
     allowNull: false,
     type: DataTypes.STRING,
+    field: 'definition'
   },
   createdAt:{
     allowNull: false,

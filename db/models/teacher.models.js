@@ -1,5 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const USER_TABLE = require('./user.models');
 const TEACHER_TABLE = 'teacher';
 
 const teacherSchema ={
@@ -10,28 +11,30 @@ const teacherSchema ={
     type: DataTypes.INTEGER,
     unique: true,
   },
-  name:{
+  name: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  lastName:{
+  lastName: {
+    allowNull: false,
+    type: DataTypes.STRING,
     field: 'last_name',
-    allowNull: false,
-    type: DataTypes.STRING,
   },
-  email:{
+  phone:{
     allowNull: false,
     type: DataTypes.STRING,
-    unique:true,
+    defaultValue: 'Ingresa tu número'
   },
-  password:{
+  contract: {
     allowNull: false,
     type: DataTypes.STRING,
+    defaultValue: 'active'
   },
-  role:{
+  endContract: {
     allowNull: false,
     type: DataTypes.STRING,
-    defaultValue: 'teacher'
+    defaultValue: 'fecha del fin del contrato',
+    field: 'Fin_del_contrato'
   },
   createdAt:{
     allowNull: false,
@@ -39,17 +42,28 @@ const teacherSchema ={
     field: 'created_at',
     defaultValue: Sequelize.NOW
   },
+  userId: {
+    field: 'user_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    unique: true,
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+    reference: {
+      model: USER_TABLE,
+      key: 'id'
+    }
+  },
 }
 
 class Teacher extends Model{
   static associate(models){
+    this.belongsTo(models.user, {
+      as: 'user'
+    }),
+
     this.hasOne(models.ClassOfCourse, {
       as: 'classOfCourse',
-      foreignKey: 'teacherId',
-    });
-
-    this.hasOne(models.TeacherProgress, {
-      as: 'teacherProgres',
       foreignKey: 'teacherId',
     });
 
@@ -57,7 +71,6 @@ class Teacher extends Model{
       as: 'teacherSchedule',
       foreignKey: 'teacherId',
     });
-
   }
   static config(sequelize){
     return {
@@ -72,14 +85,3 @@ class Teacher extends Model{
 module.exports ={ TEACHER_TABLE, teacherSchema, Teacher };
 
 
-/*
- esto lo tenemos que agregar al eschema para poder hacer la recuperacionde contraseña
-
-password:{
-    field: 'recovery_token',
-    allowNull: true,
-    type: DataTypes.STRING,
-  },
-
-
- */

@@ -1,6 +1,6 @@
 /* Cambiamos a pool por sequelize por que pool ya corre por detras de sequelize */
 const { models } = require('../libs/sequelize');
-
+const bcrypt = require('bcrypt');
 // const pool = require('../libs/postgres.pool');
 
 const boom = require('@hapi/boom');
@@ -16,7 +16,19 @@ class UserStudent{
   }
 
   async create(data){
-    const newStudent = await models.Student.create(data);
+    const hash = await bcrypt.hash(data.user.password, 10);
+    const newData = {
+      ...data,
+      user:{
+        ...data.user,
+        password: hash,
+      }
+    };
+    const newStudent = await models.Student.create(newData, {
+      include: ['user'],
+    });
+    console.log(newStudent)
+    delete newStudent.user.dataValues.password;
     return newStudent;
 
     // const newUser = {
@@ -28,10 +40,9 @@ class UserStudent{
 
   async find(query){
     const options = {
-      include: ['stateStudent', 'evaluationStudent'],
+      include: ['statusUser', 'evaluationStudent', 'user'],
       where: {},
     };
-
 
     const { limit, offset } = query;
 
@@ -66,6 +77,13 @@ class UserStudent{
     /*con Sequelize */
     // const query = 'SELECT * FROM student';
     // const [data] = await sequelize.query(query);
+  }
+
+  async findByEmail(email){
+    const rta = await models.Student.findOne({
+      where: { email }
+    });
+    return rta;
   }
 
   async findOne(id){

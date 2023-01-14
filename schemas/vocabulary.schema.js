@@ -10,7 +10,7 @@ const exampleWrited2 = Joi.string();
 const exampleWrited3 = Joi.string();
 const synonymous = Joi.string();
 const antonyms = Joi.string();
-const teoryOfWord= Joi.string();
+const theoryOfWord= Joi.string();
 const offset = Joi.number().integer();
 const limit = Joi.number().integer();
 
@@ -24,7 +24,7 @@ const createWordsSchema = Joi.object({
   exampleWrited3: exampleWrited3.required(),
   synonymous: synonymous.required(),
   antonyms: antonyms.required(),
-  teoryOfWord: teoryOfWord.required(),
+  theoryOfWord: theoryOfWord.required(),
 });
 
 const updateWordsSchema = Joi.object({
@@ -37,7 +37,7 @@ const updateWordsSchema = Joi.object({
   exampleWrited3: exampleWrited3,
   synonymous: synonymous,
   antonyms: antonyms,
-  teoryOfWord: teoryOfWord,
+  theoryOfWord: theoryOfWord,
 });
 
 const getWordsSchema = Joi.object({

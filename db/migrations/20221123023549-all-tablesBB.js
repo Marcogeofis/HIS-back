@@ -1,5 +1,6 @@
 'use strict';
 
+const { USER_TABLE, userBBSchema } = require('../models/user.models');
 const { STUDENT_TABLE, studentSchema } = require('../models/student.models');
 const { ACTIVESTUDENT_TABLE, activeStudentSchema } = require('../models/activeStudent.models');
 const { CLASSOFCOURSE_TABLE, classOfCourseSchema } = require('../models/class.models');
@@ -12,10 +13,13 @@ const { VOCABULARY_TABLE, vocabularySchema } = require('../models/vocabulary.mod
 const { COURSES_TABLE, coursesSchema } = require('../models/courses.models');
 const { APPBB_TABLE, appBBSchema } = require('../models/appBB.models');
 const { ROLLPLAY_TABLE, rollPlayAudioSchema } = require('../models/rollPlays.models')
+const { TEACHERLIST_TABLE, teacherListSchema } = require('../models/teacherList.models');
+const { PHONETIC_TABLE, phoneticSoundsSchema} = require('../models/phoneticTable.models')
 
 
 module.exports = {
   up: async (queryInterface) => {
+    await queryInterface.createTable(USER_TABLE, userBBSchema);
     await queryInterface.createTable(STUDENT_TABLE, studentSchema);
     await queryInterface.createTable(ACTIVESTUDENT_TABLE, activeStudentSchema);
     await queryInterface.createTable(CLASSOFCOURSE_TABLE, classOfCourseSchema);
@@ -28,9 +32,12 @@ module.exports = {
     await queryInterface.createTable(COURSES_TABLE, coursesSchema);
     await queryInterface.createTable(APPBB_TABLE, appBBSchema);
     await queryInterface.createTable(ROLLPLAY_TABLE, rollPlayAudioSchema);
+    await queryInterface.createTable(TEACHERLIST_TABLE, teacherListSchema);
+    await queryInterface.createTable(PHONETIC_TABLE, phoneticSoundsSchema);
   },
 
   down: async (queryInterface) => {
+    await queryInterface.dropTable(USER_TABLE, userBBSchema);
     await queryInterface.dropTable(STUDENT_TABLE, studentSchema);
     await queryInterface.dropTable(ACTIVESTUDENT_TABLE, activeStudentSchema);
     await queryInterface.dropTable(CLASSOFCOURSE_TABLE, classOfCourseSchema);
@@ -43,5 +50,7 @@ module.exports = {
     await queryInterface.dropTable(COURSES_TABLE, coursesSchema);
     await queryInterface.dropTable(APPBB_TABLE, appBBSchema);
     await queryInterface.dropTable(ROLLPLAY_TABLE, rollPlayAudioSchema);
+    await queryInterface.dropTable(TEACHERLIST_TABLE, teacherListSchema);
+    await queryInterface.dropTable(PHONETIC_TABLE, phoneticSoundsSchema);
   },
 };

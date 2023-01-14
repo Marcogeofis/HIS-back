@@ -3,8 +3,12 @@ const Joi = require('joi');
 const id = Joi.number().integer();
 const course = Joi.string();
 const section = Joi.string();
-const topic = Joi.string();
-const audio = Joi.string();
+const chapter = Joi.string();
+const audio1 = Joi.string();
+const audio2 = Joi.string();
+const audio3 = Joi.string();
+const audio4 = Joi.string();
+const audio5 = Joi.string();
 const context = Joi.string();
 const limit = Joi.number().integer();
 const offset = Joi.number().integer();
@@ -13,16 +17,19 @@ const offset = Joi.number().integer();
 const createRollPlaySchema = Joi.object({
   course: course.required(),
   section: section.required(),
-  topic: topic.required(),
-  audio: audio.required(),
+  chapter: chapter.required(),
   context: context.required(),
 });
 
 const updateRollPlaySchema = Joi.object({
   course: course,
   section: section,
-  topic: topic,
-  audio: audio,
+  chapter: chapter,
+  audio1: audio1,
+  audio2: audio2,
+  audio3: audio3,
+  audio4: audio4,
+  audio5: audio5,
   context: context,
 });
 
@@ -33,7 +40,7 @@ const getRollPlaySchema = Joi.object({
 const queryRollPlaySchema = Joi.object({
   limit,
   offset,
-  topic,
+  chapter,
 });
 
 module.exports = { createRollPlaySchema, updateRollPlaySchema, getRollPlaySchema, queryRollPlaySchema};

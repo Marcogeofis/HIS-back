@@ -5,14 +5,12 @@ class teacherProgress{
   constructor(){}
 
   async create(data){
-    const newProgressTeacher = await models.TeacherProgress.create(data)
+    const newProgressTeacher = await models.TeacherProgress.create(data);
     return newProgressTeacher;
   }
 
   async find(){
-    const allProgressTeachers = await models.TeacherProgress.findAll({
-      include: ['teacher'],
-    })
+    const allProgressTeachers = await models.TeacherProgress.findAll();
     return allProgressTeachers;
   }
 

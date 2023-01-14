@@ -5,12 +5,12 @@ const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('
 const { checkApiKey } = require('./middlewares/auth.handler');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 
 app.use(express.json());
 
-const whiteList = ["http://localhost:5500", "http://otrodominio.co"];
+const whiteList = ["http://localhost:3000", "http://otrodominio.co"];
 const options = {
   origin: (origin, callback)=>{
     if(whiteList.includes(origin) || !origin){
@@ -22,8 +22,8 @@ const options = {
 };
 app.use(cors(options)); //  con este cors le doy acceso a cualquier dominio.
 
-require('./utils/auth');
 
+require('./utils/auth');
 // pero si queremos darle acceso a otro dominio para pruebas usamos cors para dar este acceso solo a uno y no a todos.
 
 

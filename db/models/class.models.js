@@ -1,6 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const STUDENT_TABLE = require('./student.models');
 const TEACHER_TABLE = require('./teacher.models');
 
 const CLASSOFCOURSE_TABLE = 'classOfCourse';
@@ -12,37 +11,19 @@ const classOfCourseSchema ={
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  degree:{
+  nivel:{
     allowNull: false,
     type: DataTypes.STRING,
   },
-  gradeSection:{
+  seccion:{
     allowNull: false,
     type: DataTypes.STRING,
-  },
-  day:{
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  classBegins: {
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  classEnds: {
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  createdAt:{
-    allowNull: false,
-    type: DataTypes.DATE,
-    field: 'created_at',
-    defaultValue: Sequelize.NOW
+    field: 'sección',
   },
   teacherId: {
     field: 'teacher_id',
     allowNull: false,
     type: DataTypes.INTEGER,
-    unique: true,
     reference:{
       models: TEACHER_TABLE,
       key: 'id',
@@ -50,25 +31,39 @@ const classOfCourseSchema ={
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
-  studentId: {
-    field: 'student_id',
+  teacherName:{
     allowNull: false,
-    type: DataTypes.INTEGER,
-    unique: true,
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL',
-    reference: {
-      model: STUDENT_TABLE,
-      key: 'id',
-    }
+    type: DataTypes.STRING,
+    field: 'teacher',
   },
-
+  periodo:{
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  clasesEnVivo:{
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'clases_en_vivo',
+  },
+  horario:{
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  dayExam:{
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'dia_del_examen',
+  },
+  hourExam:{
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'hora_del_examen',
+  }
 }
 
 class ClassOfCourse extends Model{
 
   static associate(models){
-    this.belongsTo(models.Student, {as: 'student'});
     this.belongsTo(models.Teacher, {as: 'teacher'});
   }
 

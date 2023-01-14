@@ -1,16 +1,19 @@
 const express = require('express');
 const passport = require('passport');
 
+const { recoverySchema } = require('../schemas/recovery.schema');
+const validatorHandler = require('../middlewares/validator.handler');
 const AuthService = require('../services/auth.service');
 const service = new AuthService();
 
 const router = express.Router();
 
 router.post('/login',
-  passport.authenticate('local', {session: false}),
+  passport.authenticate('local', {session: false, }),
   async (req, res, next) => {
     try {
       const user = req.user;
+      // console.log(user);
       res.json(service.signToken(user));
     } catch (error) {
       next(error)
@@ -32,10 +35,9 @@ router.post('/recovery',
 );
 
 router.post('/change-password',
-  // debo crear un schema para la validación de este cambio de contraseña
+  validatorHandler(recoverySchema, 'body'),
   async (req, res, next) => {
     try {
-
       const { token, password } = req.body;
       const rta = await service.changePassword(token, password);
       res.json(rta);

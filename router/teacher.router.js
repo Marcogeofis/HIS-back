@@ -1,4 +1,7 @@
 const express = require('express');
+const passport = require('passport');
+const { checkRoles } = require('../middlewares/auth.handler');
+
 const router = express.Router();
 // Ya que creamos router, procdemos a crear el CRUD.
 
@@ -8,6 +11,8 @@ const teacherSevice = require('../services/teacher.service');
 const service = new teacherSevice();
 
 router.get('/',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('superAdmin', 'teacher/admin', 'teacher'),
   validatorHandler(queryTeacherSchema, 'query'),
     async (req, res, next) => {
       try {
@@ -19,56 +24,60 @@ router.get('/',
 });
 
 router.get('/:id',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('superAdmin', 'teacher/admin'),
   validatorHandler(getTeacherSchema, 'params'),
-  async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const teacher = await service.findOne(id);
-    res.json(teacher);
-  } catch (error) {
-    next(error);
-  }
+    async (req, res, next) => {
+      try {
+        const { id } = req.params;
+        const teacher = await service.findOne(id);
+        res.json(teacher);
+      } catch (error) {
+        next(error);
+      }
 
 });
 
 router.post('/',
   validatorHandler(createTeacherSchema, 'body'),
-  async (req, res, next) => {
-  try {
-    const body = req.body;
-    const student = await service.create(body);
-    res.status(200).json(student);
-  } catch (error) {
-    next(error);
-  }
+    async (req, res, next) => {
+      try {
+        const body = req.body;
+        const student = await service.create(body);
+        res.status(200).json(student);
+      } catch (error) {
+        next(error);
+      }
 
 });
 
 router.patch('/:id',
   validatorHandler(getTeacherSchema, 'params'),
   validatorHandler(updateTeacherSchema, 'body'),
-  async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const body = req.body;
-    const teacherChanges = await service.update(id, body);
-    res.json(teacherChanges)
-  } catch (error) {
-    next(error);
-  }
+    async (req, res, next) => {
+      try {
+        const { id } = req.params;
+        const body = req.body;
+        const teacherChanges = await service.update(id, body);
+        res.json(teacherChanges)
+      } catch (error) {
+        next(error);
+      }
 
 });
 
 router.delete('/:id',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('superAdmin'),
   validatorHandler(getTeacherSchema, 'params'),
-  async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const teacher = await service.delete(id);
-    res.json(teacher);
-  } catch (error) {
-    next(error);
-  }
+    async (req, res, next) => {
+      try {
+        const { id } = req.params;
+        const teacher = await service.delete(id);
+        res.json(teacher);
+      } catch (error) {
+        next(error);
+      }
 
 });
 

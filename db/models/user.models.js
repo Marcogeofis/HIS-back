@@ -1,28 +1,32 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const TEACHERPROGRESS_TABLE = 'teacherProgress';
 
-const teacherProgressSchema = {
-  id:{
+const USER_TABLE = 'user';
+
+const userBBSchema = {
+  id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  teacher:{
+  email: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: true,
+  },
+  password: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  curso:{
-    allowNull: false,
+  role: {
+    allowNull: true,
     type: DataTypes.STRING,
+    defaultValue: 'student'
   },
-  calificacion:{
-    allowNull: false,
-    type: DataTypes.INTEGER,
-  },
-  mejoras:{
-    allowNull: false,
+  recoveryToken:{
+    field: 'recovery_token',
+    allowNull: true,
     type: DataTypes.STRING,
   },
   createdAt:{
@@ -34,18 +38,28 @@ const teacherProgressSchema = {
 
 }
 
-class TeacherProgress extends Model{
-  static associate(models){
+class User extends Model{
 
+  static associate(models){
+    this.hasOne(models.Student, {
+      as: 'Student',
+      foreignKey: 'userId',
+    });
+
+    this.hasOne(models.Teacher, {
+      as: 'Teacher',
+      foreignKey: 'userId',
+    });
   }
+
   static config(sequelize){
     return {
       sequelize,
-      tableName: TEACHERPROGRESS_TABLE,
-      modelName: 'TeacherProgress',
+      tableName: USER_TABLE,
+      modelName: 'user',
       timestamps: false,
     }
   }
 }
 
-module.exports ={ TEACHERPROGRESS_TABLE, teacherProgressSchema, TeacherProgress };
+module.exports ={ USER_TABLE, userBBSchema, User}

@@ -3,26 +3,37 @@ const Joi = require('joi');
 const id = Joi.number().integer();
 const name = Joi.string().min(5).max(150);
 const lastName = Joi.string().min(5).max(150);
+const modalidad = Joi.string();
 const status = Joi.string();
-const course = Joi.string();
-const discount = Joi.string();
-const totalCost = Joi.number().integer();
+const curso = Joi.string();
+const costo = Joi.number().integer();
+const descuento = Joi.string();
+const claveDescuento = Joi.string();
+const totalCosto = Joi.number().integer();
+const fechaDePago = Joi.string();
+const inicioPeriodo = Joi.string();
+const finPeriodo = Joi.string();
 const studentId = Joi.number().integer();
 
 const createActiveStudentsSchema = Joi.object({
+  studentId: studentId.required(),
   name: name.required(),
   lastName: lastName.required(),
-  status: status.required(),
-  course: course.required(),
-  studentId: studentId.required(),
 });
 
 const updateActiveStudentsSchema = Joi.object({
+  modalidad: modalidad,
   status: status,
-  course: course,
-  discount: discount,
-  totalCost: totalCost,
+  curso: curso,
+  costo: costo,
+  descuento: descuento,
+  claveDescuento: claveDescuento,
+  totalCosto: totalCosto,
+  fechaDePago: fechaDePago,
+  inicioPeriodo: inicioPeriodo,
+  finPeriodo: finPeriodo,
   studentId: studentId,
+
 });
 
 const getActiveStudentsSchema = Joi.object({

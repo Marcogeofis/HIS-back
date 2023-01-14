@@ -6,8 +6,8 @@ const nodemailer = require('nodemailer');
 
 const { config } = require('../config/config');
 
-const TeacherService = require('./teacher.service');
-const service = new TeacherService();
+const UserService = require('./user.service');
+const service = new UserService();
 
 class AuthService{
 
@@ -21,6 +21,7 @@ class AuthService{
       throw boom.unauthorized();
     }
     delete user.dataValues.password;
+
     return user;
   }
 
@@ -30,10 +31,8 @@ class AuthService{
       role: user.role,
     };
     const token = jwt.sign(payload, config.jwtSecret)
-    res.json({
-      user,
-      token,
-    });
+
+    return token;
   }
 
 
@@ -51,8 +50,8 @@ class AuthService{
       from: config.smtpEmail, // sender address
       to: `${user.email}`, // list of receivers
       subject: "Prueba de bebilungual ✔", // Subject line
-      text: "Este correo fue enviado como prueba de bebilungual", // plain text body
-      html: `<b>Ingresa a este link => ${token}</b>`, // html body
+      text: "Este correo fue enviado como prueba de bebilungual, para recuperar mi token", // plain text body
+      html: `<b>Ingresa a este link =>${link}</b>`, // html body
     }
 
     const rta = await this.sendMail(mail);

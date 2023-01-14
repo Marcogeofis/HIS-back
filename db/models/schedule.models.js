@@ -9,6 +9,10 @@ const scheduleSchema ={
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
+  name:{
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
   hrs: {
     allowNull: false,
     type: DataTypes.INTEGER,

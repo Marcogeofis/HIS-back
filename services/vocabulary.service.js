@@ -11,7 +11,6 @@ class AllVocabulary{
 
   async find(query){
     const options = {
-      include: ['levelCorse'],
       where: {},
     };
 

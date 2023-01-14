@@ -1,5 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const USER_TABLE = require('./user.models');
 const STUDENT_TABLE = 'student';
 
 const studentSchema ={
@@ -22,24 +23,17 @@ const studentSchema ={
   age: {
     allowNull: false,
     type: DataTypes.INTEGER,
+    defaultValue: 0,
   },
   phone:{
     allowNull: false,
     type: DataTypes.STRING,
+    defaultValue:'teléfono',
   },
-  email: {
+  goal:{
     allowNull: false,
     type: DataTypes.STRING,
-    unique: true,
-  },
-  password: {
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  role:{
-    allowNull: false,
-    type: DataTypes.STRING,
-    defaultValue:'student',
+    defaultValue:'objetivo',
   },
   createdAt:{
     allowNull: false,
@@ -47,36 +41,36 @@ const studentSchema ={
     field: 'created_at',
     defaultValue: Sequelize.NOW
   },
-  studentId: {
-    field: 'student_id',
+  userId: {
+    field: 'user_id',
     allowNull: false,
     type: DataTypes.INTEGER,
     unique: true,
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
     reference: {
-      model: STUDENT_TABLE,
+      model: USER_TABLE,
       key: 'id'
     }
   },
+
 }
 
 class Student extends Model{
   static associate(models){
-    this.hasOne(models.statusStudent, {
-      as: 'stateStudent',
-      foreignKey: 'studentId',
-    });
+    this.belongsTo(models.user, {
+      as: 'user'
+    }),
 
-    this.hasOne(models.ClassOfCourse, {
-      as: 'classOfCourse',
-      foreignKey: 'studentId'
+    this.hasOne(models.statusStudent, {
+      as: 'statusUser',
+      foreignKey: 'studentId',
     });
 
     this.hasOne(models.EvaluationStudent, {
       as: 'evaluationStudent',
       foreignKey: 'studentId'
-    })
+    });
   }
 
   static config(sequelize){

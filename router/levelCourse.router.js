@@ -22,63 +22,62 @@ router.get('/',
 });
 
 router.get('/:id',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('superAdmin', 'teacher/Admin', 'teacher'),
   validatorHandler(getLevelCourseSchema, 'params'),
   async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const levelCourse = await service.findOne(id);
-    res.json(levelCourse);
-  } catch (error) {
-    next(error)
-  }
-
-
+    try {
+      const { id } = req.params;
+      const levelCourse = await service.findOne(id);
+      res.json(levelCourse);
+    } catch (error) {
+      next(error)
+    }
 });
 
 router.post('/',
   passport.authenticate('jwt', {session: false}),
-  checkRoles('teacherAdmin', 'teacher'),
+  checkRoles('teacherAdmin', 'superAdmin'),
   validatorHandler(createLevelCourseSchema, 'body'),
   async (req, res, next) => {
-  try {
-    const body = req.body;
-    const levelCourse = await service.create(body);
-    res.status(200).json(levelCourse);
-  } catch (error) {
-    next(error)
-  }
+    try {
+      const body = req.body;
+      const levelCourse = await service.create(body);
+      res.status(200).json(levelCourse);
+    } catch (error) {
+      next(error)
+    }
 
 });
 
 router.patch('/:id',
   passport.authenticate('jwt', {session: false}),
-  checkRoles('teacherAdmin'),
+  checkRoles('superAdmin', 'teacher/Admin'),
   validatorHandler(getLevelCourseSchema, 'params'),
   validatorHandler(updateLevelCourseSchema, 'body'),
   async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const body = req.body;
-    const courseChanges = await service.update(id, body);
-    res.json(courseChanges)
-  } catch (error) {
-    next(error)
-  }
-
+    try {
+      const { id } = req.params;
+      const body = req.body;
+      const courseChanges = await service.update(id, body);
+      res.json(courseChanges)
+    } catch (error) {
+      next(error)
+    }
 });
 
 router.delete('/:id',
   passport.authenticate('jwt', {session: false}),
-  checkRoles('teacherAdmin'),
+  checkRoles('superAdmin'),
   validatorHandler(getLevelCourseSchema, 'params'),
   async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const levelcourse = await service.delete(id);
-    res.json(levelcourse);
-  } catch (error) {
-    next(error)
-  }
+    try {
+      const { id } = req.params;
+      const levelcourse = await service.delete(id);
+      res.json(levelcourse);
+    } catch (error) {
+      next(error)
+    }
 
 });
 

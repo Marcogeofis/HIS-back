@@ -6,19 +6,26 @@ class Teacher{
   constructor(){}
 
   async create(data){
-    const hash = await bcrypt.hash(data.password, 10)
-    const newTeacher = await models.Teacher.create({
+    const hash = await bcrypt.hash(data.user.password, 10)
+    const newData = {
       ...data,
-      password: hash,
+      user: {
+        ...data.user,
+        password: hash
+      }
+    };
+    const newTeacher = await models.Teacher.create(newData, {
+      include: ['user'],
     });
-    delete newTeacher.dataValues.password;
+    delete newTeacher.user.dataValues.password;
     return newTeacher;
+
   }
 
   async find(query){
 
     const options = {
-      include: ['classOfCourse', 'teacherProgres', 'teacherSchedule'],
+      include: ['classOfCourse', 'teacherSchedule', 'user'],
       where: {},
     };
 

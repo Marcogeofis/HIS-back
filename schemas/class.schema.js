@@ -1,33 +1,39 @@
 const Joi = require('joi');
 
 const id = Joi.number().integer();
-const degree = Joi.string();
-const gradeSection = Joi.string();
+const nivel = Joi.string();
+const seccion = Joi.string();
 const teacherId = Joi.number().integer();
-const studentId = Joi.number().integer();
-const day = Joi.string();
-const classBegins = Joi.string();
-const classEnds = Joi.string();
+const teacherName = Joi.string();
+const periodo = Joi.string();
+const clasesEnVivo = Joi.string();
+const horario = Joi.string();
+const dayExam = Joi.string();
+const hourExam = Joi.string();
 
 
 const createClassSchema = Joi.object({
-  degree: degree.required(),
-  gradeSection: gradeSection.required(),
+  nivel: nivel.required(),
+  seccion: seccion.required(),
   teacherId: teacherId.required(),
-  studentId: studentId.required(),
-  day: day.required(),
-  classBegins: classBegins.required(),
-  classEnds: classEnds.required(),
+  teacherName: teacherName.required(),
+  periodo: periodo.required(),
+  clasesEnVivo: clasesEnVivo.required(),
+  horario: horario.required(),
+  dayExam: dayExam.required(),
+  hourExam: hourExam.required(),
 });
 
 const updateClassSchema = Joi.object({
-  degree: degree,
-  gradeSection: gradeSection,
+  nivel: nivel,
+  seccion: seccion,
   teacherId: teacherId,
-  studentId: studentId,
-  day: day,
-  classBegins: classBegins,
-  classEnds: classEnds,
+  teacherName: teacherName,
+  periodo: periodo,
+  clasesEnVivo: clasesEnVivo,
+  horario: horario,
+  dayExam: dayExam,
+  hourExam: hourExam,
 });
 
 const getClassSchema = Joi.object({

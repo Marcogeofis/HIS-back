@@ -19,12 +19,32 @@ const rollPlayAudioSchema ={
     type: DataTypes.STRING,
     defaultValue: 'Apartado del curso',
   },
-  topic:{
+  chapter:{
     allowNull: false,
     type: DataTypes.STRING,
     defaultValue: 'tema relacionado',
   },
-  audio:{
+  audio1:{
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: 'ruta del audio',
+  },
+  audio2:{
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: 'ruta del audio',
+  },
+  audio3:{
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: 'ruta del audio',
+  },
+  audio4:{
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: 'ruta del audio',
+  },
+  audio5:{
     allowNull: false,
     type: DataTypes.STRING,
     defaultValue: 'ruta del audio',

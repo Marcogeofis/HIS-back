@@ -14,6 +14,15 @@ const evaluationStudentSchema ={
     allowNull: false,
     type: DataTypes.STRING,
   },
+  section:{
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  nameOfStudent: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'student'
+  },
   listening:{
     allowNull: false,
     type: DataTypes.INTEGER,
