@@ -19,6 +19,16 @@ const createActiveStudentsSchema = Joi.object({
   studentId: studentId.required(),
   name: name.required(),
   lastName: lastName.required(),
+  modalidad: modalidad.required(),
+  status: status.required(),
+  curso: curso.required(),
+  costo: costo.required(),
+  descuento: descuento.required(),
+  claveDescuento: claveDescuento.required(),
+  totalCosto: totalCosto.required(),
+  fechaDePago: fechaDePago.required(),
+  inicioPeriodo: inicioPeriodo.required(),
+  finPeriodo: finPeriodo.required(),
 });
 
 const updateActiveStudentsSchema = Joi.object({

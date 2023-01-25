@@ -5,17 +5,19 @@ const passport = require('passport');
 // Ya que creamos router, procdemos a crear el CRUD.
 
 const validatorHandler = require('../middlewares/validator.handler');
-const { createUserSchema, updateUserSchema, getUserSchema } = require('../schemas/user.schema')
+const { createUserSchema, updateUserSchema, getUserSchema, queryUserSchema } = require('../schemas/user.schema')
 const UserService = require('../services/user.service');
+
 
 const service = new UserService();
 
 router.get('/',
-  passport.authenticate('jwt', {session: false}),
-  checkRoles('superAdmin'),
+  // passport.authenticate('jwt', {session: false}),
+  // checkRoles('superAdmin'),
+  validatorHandler(queryUserSchema, 'query'),
   async (req, res, next) => {
     try {
-      const users = await service.find()
+      const users = await service.find(req.query)
       res.json(users);
     } catch (error) {
       next(error)

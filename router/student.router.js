@@ -11,8 +11,8 @@ const UserStudentService = require('../services/student.service');
 const service = new UserStudentService();
 
 router.get('/',
-  passport.authenticate('jwt', {session: false}),
-  checkRoles('teacher/Admin', 'superAdmin'),
+  // passport.authenticate('jwt', {session: false}),
+  // checkRoles('teacher/Admin', 'superAdmin'),
   validatorHandler(queryStudentSchema, 'query'),
   async (req, res, next) => {
     try {
@@ -25,7 +25,7 @@ router.get('/',
 
 router.get('/:id',
   passport.authenticate('jwt', {session: false}),
-  checkRoles('teacher/Admin', 'superAdmin'),
+  checkRoles('teacher/Admin', 'superAdmin', 'student'),
   validatorHandler(getStudentSchema, 'params'),
   async (req, res, next) => {
   try {
@@ -37,6 +37,7 @@ router.get('/:id',
   }
 
 });
+
 
 router.post('/',
   validatorHandler(createStudentSchema, 'body'),

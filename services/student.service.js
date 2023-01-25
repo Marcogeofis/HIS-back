@@ -51,9 +51,9 @@ class UserStudent{
       options.offset = offset;
     }
 
-    const { lastName } = query;
-    if(lastName){
-      options.where.lastName = lastName;
+    const { email } = query;
+    if(email){
+      options.where.email = email;
     }
 
     const students = await models.Student.findAll(options);

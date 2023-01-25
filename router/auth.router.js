@@ -13,8 +13,9 @@ router.post('/login',
   async (req, res, next) => {
     try {
       const user = req.user;
+      const jwToken = service.signToken(user);
       // console.log(user);
-      res.json(service.signToken(user));
+      res.json({ user, jwToken });
     } catch (error) {
       next(error)
     }

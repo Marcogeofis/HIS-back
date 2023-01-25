@@ -24,11 +24,18 @@ class UserBB{
 
   }
 
-  async find(){
-    const user = await models.user.findAll({
-      include: ['Student', 'Teacher']
-    });
+  async find(query){
+    const options = {
+      include: ['Student', 'Teacher'],
+      where: {},
+    };
 
+    const {email} = query;
+    if(email){
+      options.where.email = email;
+    }
+
+    const user = await models.user.findAll(options);
     return user;
 
   }
