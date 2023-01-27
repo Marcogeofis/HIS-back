@@ -1,6 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const USER_TABLE = require('./user.models');
 const TEACHER_TABLE = 'teacher';
 
 const teacherSchema ={
@@ -20,21 +19,21 @@ const teacherSchema ={
     type: DataTypes.STRING,
     field: 'last_name',
   },
-  phone:{
+  email: {
     allowNull: false,
     type: DataTypes.STRING,
-    defaultValue: 'Ingresa tu número'
   },
-  contract: {
+  clases: {
     allowNull: false,
-    type: DataTypes.STRING,
-    defaultValue: 'active'
+    type: DataTypes.INTEGER,
   },
-  endContract: {
+  start: {
     allowNull: false,
     type: DataTypes.STRING,
-    defaultValue: 'fecha del fin del contrato',
-    field: 'Fin_del_contrato'
+  },
+  end: {
+    allowNull: false,
+    type: DataTypes.STRING,
   },
   createdAt:{
     allowNull: false,
@@ -42,35 +41,11 @@ const teacherSchema ={
     field: 'created_at',
     defaultValue: Sequelize.NOW
   },
-  userId: {
-    field: 'user_id',
-    allowNull: false,
-    type: DataTypes.INTEGER,
-    unique: true,
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL',
-    reference: {
-      model: USER_TABLE,
-      key: 'id'
-    }
-  },
 }
 
 class Teacher extends Model{
-  static associate(models){
-    this.belongsTo(models.user, {
-      as: 'user'
-    }),
-
-    this.hasOne(models.ClassOfCourse, {
-      as: 'classOfCourse',
-      foreignKey: 'teacherId',
-    });
-
-    this.hasOne(models.Schedule, {
-      as: 'teacherSchedule',
-      foreignKey: 'teacherId',
-    });
+  static associate(){
+    //
   }
   static config(sequelize){
     return {

@@ -1,6 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const TEACHER_TABLE = require('./teacher.models');
 
 const CLASSOFCOURSE_TABLE = 'classOfCourse';
 
@@ -24,12 +23,6 @@ const classOfCourseSchema ={
     field: 'teacher_id',
     allowNull: false,
     type: DataTypes.INTEGER,
-    reference:{
-      models: TEACHER_TABLE,
-      key: 'id',
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
   },
   teacherName:{
     allowNull: false,
@@ -63,8 +56,8 @@ const classOfCourseSchema ={
 
 class ClassOfCourse extends Model{
 
-  static associate(models){
-    this.belongsTo(models.Teacher, {as: 'teacher'});
+  static associate(){
+    // this.belongsTo(models.Teacher, {as: 'teacher'});
   }
 
   static config(sequelize){

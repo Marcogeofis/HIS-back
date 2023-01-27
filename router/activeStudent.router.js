@@ -13,8 +13,12 @@ router.get('/',
   passport.authenticate('jwt', {session: false}),
   checkRoles('simpleAdmin', 'superAdmin'),
   async (req, res, next) => {
-    const activeStudents = await service.find();
-    res.json(activeStudents);
+    try {
+      const activeStudents = await service.find();
+      res.json(activeStudents);
+    } catch(error){
+      next(error)
+    }
 });
 
 router.get('/:id',

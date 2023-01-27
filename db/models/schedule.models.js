@@ -1,5 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
-const TEACHER_TABLE = require('./teacher.models');
+
 const SCHEDULE_TABLE = 'schedule';
 
 const scheduleSchema ={
@@ -31,24 +31,12 @@ const scheduleSchema ={
     field: 'created_at',
     defaultValue: Sequelize.NOW
   },
-  teacherId: {
-    field: 'teacher_id',
-    allowNull: false,
-    type: DataTypes.INTEGER,
-    unique: true,
-    reference:{
-      models: TEACHER_TABLE,
-      key: 'id',
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
-  },
 }
 
 class Schedule extends Model{
-  static associate(models){
-    this.belongsTo(models.Teacher, { as: 'teacher' });
+  static associate(){
   }
+
   static config(sequelize){
     return {
       sequelize,

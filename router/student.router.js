@@ -24,8 +24,8 @@ router.get('/',
 });
 
 router.get('/:id',
-  passport.authenticate('jwt', {session: false}),
-  checkRoles('teacher/Admin', 'superAdmin', 'student'),
+  // passport.authenticate('jwt', {session: false}),
+  // checkRoles('teacher/Admin', 'superAdmin', 'student'),
   validatorHandler(getStudentSchema, 'params'),
   async (req, res, next) => {
   try {

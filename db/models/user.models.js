@@ -46,10 +46,10 @@ class User extends Model{
       foreignKey: 'userId',
     });
 
-    this.hasOne(models.Teacher, {
-      as: 'Teacher',
-      foreignKey: 'userId',
-    });
+    // this.hasOne(models.Teacher, {
+    //   as: 'Teacher',
+    //   foreignKey: 'userId',
+    // });
   }
 
   static config(sequelize){

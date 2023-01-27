@@ -39,6 +39,8 @@ router.get('/:id',
 });
 
 router.post('/',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('superAdmin', 'teacher/admin'),
   validatorHandler(createTeacherSchema, 'body'),
     async (req, res, next) => {
       try {

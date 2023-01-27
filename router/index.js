@@ -10,7 +10,6 @@ const scheduleRouter = require('./schedule.router');
 const levelCourseRouter = require('./levelCourse.router');
 const classRouter = require('./class.router');
 const appBBRouter = require('./appBB.router');
-const tareasRouter = require('./homeWork.router');
 const vocabularyRouter = require('./vocabulary.router');
 const activeStudentsRouter = require('./activeStudent.router');
 const rollPlaysRouter = require('./rollPlays.router');
@@ -32,7 +31,6 @@ function routerApi(app){
   router.use('/level-course', levelCourseRouter);
   router.use('/class-of-course', classRouter);
   router.use('/appBB-progress', appBBRouter);
-  router.use('/myhome-work', tareasRouter);
   router.use('/vocabulary', vocabularyRouter);
   router.use('/active-students', activeStudentsRouter);
   router.use('/rollPlays', rollPlaysRouter);

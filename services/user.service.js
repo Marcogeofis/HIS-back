@@ -26,7 +26,7 @@ class UserBB{
 
   async find(query){
     const options = {
-      include: ['Student', 'Teacher'],
+      include: ['Student'],
       where: {},
     };
 

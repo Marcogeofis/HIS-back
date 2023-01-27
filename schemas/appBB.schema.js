@@ -1,25 +1,22 @@
 const Joi = require('joi');
 
 const id = Joi.number().integer();
-const tegusto = Joi.string();
-const queGustoMas = Joi.string();
-const queNoGusto = Joi.string();
-const suggestions = Joi.string();
+const like = Joi.number().integer();
+const nolike = Joi.number().integer();
+const suggestions = Joi.string().max(500);
 const meRecomiendas = Joi.string();
 
 
 const createAppBBSchema = Joi.object({
-  tegusto: tegusto.required(),
-  queGustoMas: queGustoMas.required(),
-  queNoGusto: queNoGusto.required(),
+  like: like.required(),
+  nolike: nolike.required(),
   suggestions: suggestions.required(),
   meRecomiendas: meRecomiendas.required(),
 });
 
 const updateAppBBSchema = Joi.object({
-  tegusto: tegusto,
-  queGustoMas: queGustoMas,
-  queNoGusto: queNoGusto,
+  like: like,
+  nolike: nolike,
   suggestions: suggestions,
   meRecomiendas: meRecomiendas,
 });

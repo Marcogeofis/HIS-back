@@ -9,15 +9,11 @@ const appBBSchema ={
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  tegusto: {
+  like: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  queGustoMas: {
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  queNoGusto: {
+  nolike: {
     allowNull: false,
     type: DataTypes.STRING,
   },

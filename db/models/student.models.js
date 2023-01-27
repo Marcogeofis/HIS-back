@@ -35,6 +35,11 @@ const studentSchema ={
     type: DataTypes.STRING,
     defaultValue:'objetivo',
   },
+  photo:{
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue:'ruta-foto',
+  },
   createdAt:{
     allowNull: false,
     type: DataTypes.DATE,
@@ -71,6 +76,18 @@ class Student extends Model{
       as: 'evaluationStudent',
       foreignKey: 'studentId'
     });
+
+    /**
+     *  this.hasOne(models.ClassOfCourse, {
+      as: 'classOfCourse',
+      foreignKey: 'teacherId',
+    });
+
+    this.hasOne(models.Schedule, {
+      as: 'teacherSchedule',
+      foreignKey: 'teacherId',
+    });
+     */
   }
 
   static config(sequelize){
