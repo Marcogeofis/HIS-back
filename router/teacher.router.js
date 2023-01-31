@@ -11,8 +11,6 @@ const teacherSevice = require('../services/teacher.service');
 const service = new teacherSevice();
 
 router.get('/',
-  passport.authenticate('jwt', {session: false}),
-  checkRoles('superAdmin', 'teacher/admin', 'teacher'),
   validatorHandler(queryTeacherSchema, 'query'),
     async (req, res, next) => {
       try {

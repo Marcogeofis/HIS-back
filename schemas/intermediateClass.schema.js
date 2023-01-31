@@ -14,35 +14,40 @@ const context = Joi.string().max(500);
 const limit = Joi.number().integer();
 const offset = Joi.number().integer();
 
-const createLevelCourseSchema = Joi.object({
+const createIntermediateClassSchema = Joi.object({
   course: course.required(),
   section: section.required(),
   chapter: chapter.required(),
   video: video.required(),
+  point1: point1.required(),
+  point2: point2.required(),
+  point3: point3.required(),
+  point4: point4.required(),
+  point5: point5.required(),
   context: context.required(),
 });
 
-const updateLevelCourseSchema = Joi.object({
-  course: course,
-  section: section,
-  chapter: chapter,
-  video: video,
-  point1: point1,
-  point2: point2,
-  point3: point3,
-  point4: point4,
-  point5: point5,
-  context: context,
+const updateIntermediateClassSchema = Joi.object({
+  id,
+  course,
+  section,
+  chapter,
+  video,
+  point1,
+  point2,
+  point3,
+  point4,
+  point5,
+  context,
 });
 
-const getLevelCourseSchema = Joi.object({
+const getIntermediateClassSchema = Joi.object({
   id: id.required(),
 });
 
-const queryLevelCourseSchema = Joi.object({
+const queryIntermediateClassSchema = Joi.object({
   limit,
   offset,
-  chapter,
 });
 
-module.exports = { createLevelCourseSchema, updateLevelCourseSchema, getLevelCourseSchema, queryLevelCourseSchema }
+module.exports = { getIntermediateClassSchema, updateIntermediateClassSchema, createIntermediateClassSchema, queryIntermediateClassSchema };

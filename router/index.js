@@ -6,7 +6,6 @@ const studentRouter = require('./student.router');
 const evaluationStudentRouter = require('./evaluationStudent.router');
 const teacherRouter = require('./teacher.router');
 const teacherProgressRouter = require('./teacherProgres.router');
-const scheduleRouter = require('./schedule.router');
 const levelCourseRouter = require('./levelCourse.router');
 const classRouter = require('./class.router');
 const appBBRouter = require('./appBB.router');
@@ -16,6 +15,9 @@ const rollPlaysRouter = require('./rollPlays.router');
 const authRouter = require('./auth.router');
 const teacherListRouter = require('./teacherlist.router');
 const phoneticTableRouter = require('./phoneticTable.router');
+const intermediateClass = require('./intermedateClass.router');
+const advanceClass = require('./advanceClass.router');
+const basicClass = require('./basicClass.router');
 
 function routerApi(app){
   const router = express.Router();
@@ -27,7 +29,6 @@ function routerApi(app){
   router.use('/evaluation-student', evaluationStudentRouter);
   router.use('/teacher', teacherRouter);
   router.use('/teacher-progress', teacherProgressRouter);
-  router.use('/schedule', scheduleRouter);
   router.use('/level-course', levelCourseRouter);
   router.use('/class-of-course', classRouter);
   router.use('/appBB-progress', appBBRouter);
@@ -37,6 +38,9 @@ function routerApi(app){
   router.use('/auth', authRouter);
   router.use('/teacher-course',teacherListRouter);
   router.use('/phonetic-table', phoneticTableRouter);
+  router.use('/intermediate-course', intermediateClass);
+  router.use('/advance-course', advanceClass);
+  router.use('/basic-course', basicClass);
 }
 
 module.exports = routerApi;

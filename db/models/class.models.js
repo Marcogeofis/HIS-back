@@ -57,7 +57,7 @@ const classOfCourseSchema ={
 class ClassOfCourse extends Model{
 
   static associate(){
-    // this.belongsTo(models.Teacher, {as: 'teacher'});
+    //
   }
 
   static config(sequelize){
