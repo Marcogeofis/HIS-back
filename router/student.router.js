@@ -53,6 +53,8 @@ router.post('/',
 });
 
 router.patch('/:id',
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('teacher/Admin', 'superAdmin', 'student'),
   validatorHandler(getStudentSchema, 'params'),
   validatorHandler(updateStudentSchema, 'body'),
   async (req, res, next) => {

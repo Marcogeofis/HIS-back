@@ -32,7 +32,6 @@ router.get('/:id',
       } catch (error) {
         next(error);
       }
-
 });
 
 router.post('/',

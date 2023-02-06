@@ -18,6 +18,11 @@ const createRollPlaySchema = Joi.object({
   course: course.required(),
   section: section.required(),
   chapter: chapter.required(),
+  audio1: audio1.required(),
+  audio2: audio2.required(),
+  audio3: audio3.required(),
+  audio4: audio4.required(),
+  audio5: audio5.required(),
   context: context.required(),
 });
 
