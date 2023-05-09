@@ -48,6 +48,8 @@ const getBasicClassSchema = Joi.object({
 const queryBasicClassSchema = Joi.object({
   limit,
   offset,
+  section,
+  chapter,
 });
 
 module.exports = { getBasicClassSchema, updateBasicClassSchema, createBasicClassSchema, queryBasicClassSchema };

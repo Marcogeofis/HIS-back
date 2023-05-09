@@ -13,7 +13,7 @@ router.get('/',
   validatorHandler(queryBasicClassSchema, 'query'),
   async (req, res, next) => {
   try {
-    const allBasicClass = await service.find();
+    const allBasicClass = await service.find(req.query);
     res.json(allBasicClass);
   } catch (error) {
     next(error)

@@ -9,8 +9,19 @@ class BasicClass{
     return newBasicClass;
   }
 
-  async find(){
-    const allBasicClass = await models.BasicCourse.findAll()
+  async find(query){
+    const options ={
+      where:{},
+    };
+
+    const { section, chapter } = query;
+
+    if (section){
+      options.where.section = section;
+      options.where.chapter = chapter;
+    }
+
+    const allBasicClass = await models.BasicCourse.findAll(options)
     return allBasicClass;
   }
 
